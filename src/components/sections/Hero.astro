@@ -1,0 +1,41 @@
+---
+import { Image } from 'astro:assets';
+import downArrow from '../../assets/downarrow.svg'
+
+---
+<div class="p-4 lg:px-30">
+<div class="w-full flex flex-col items-center justify-start text-center gap-6 md:gap-8 pt-28 md:pt-24 pb-12">
+
+  <div class="animate-blur-in flex flex-col items-center justify-start gap-6 md:gap-8">
+
+      <div class="w-[72px] h-[72px] border border-neutral-200/20 rounded-2xl lg:w-[100px] lg:h-[100px] lg:rounded-3xl">
+
+      </div>
+
+      <h1 class="text-4xl md:text-6xl lg:text-7xl text-brand-secondary font-primary tracking-[-0.03em] leading-normal">Hello world! I'm Diptangshu</h1>
+        
+      
+  </div>
+
+  <p class="font-secondary text-sm text-brand-secondary md:text-sm lg:text-[20px] animate-reveal-up">Product Engineer based in Jaipur.</p>
+
+  <div class="animate-fade-up">
+
+    
+
+  </div>
+
+  <div class="flex flex-col items-center justify-center gap-1 cursor-pointer select-none animate-fade-up text-brand-secondary/60 hover:text-brand-secondary transition-colors duration-300 ">
+  <div class="text-xs md:text-sm font-secondary tracking-widest uppercase animate-fluid-float">Scroll</div>
+  <Image src={downArrow} alt="Down Arrow" class="w-4 h-4 md:w-5 md:h-5 opacity-80 animate-fluid-float" />
+</div>
+
+
+
+
+
+
+</div>
+
+</div>
+
