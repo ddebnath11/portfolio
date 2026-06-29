@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+@import "tailwindcss";
+
+@layer base {
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+@theme {
+  --color-brand-bg: #222222;  
+  --color-brand-text: #ffffff;
+
+  --font-primary: "Inter", sans-serif;
+}
+
+@layer base {
+  body{
+    background-color: var(--color-brand-bg);
+    color: var(--color-brand-text);
+    font-family: var(--font-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  @layer components {
+ 
+  } 
+
+  @layer utilities {
+    .nav-hidden {
+    transform: translateY(-100%) !important;
+  }
+
+  .animate-fluid-float {
+    animation: bounce 2.4s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  }
+  
+  }
+}
+
+@layer base {
+  body {
+    background-color: var(--color-brand-bg);
+    color: var(--color-brand-text);
+    font-family: var(--font-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+  }
+
+ 
+}

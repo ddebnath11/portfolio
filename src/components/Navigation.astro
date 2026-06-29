@@ -1,0 +1,153 @@
+---
+/* IMPORTS */
+import '../styles/global.css';
+import { Image } from 'astro:assets';
+import Logo from '../assets/logo-main.svg';
+
+interface Props {
+  pill: string;
+  footnote?: string;
+}
+
+const { pill,
+  footnote = "DIPTANGSHU DEBNATH'S PORTFOLIO"
+
+
+} = Astro.props;
+---
+<div 
+  id="main-navbar"
+  class="fixed top-0 left-0 w-full z-50 bg-white/70 dark:bg-[#0a0a0a]/70 backdrop-blur-xl px-6 py-4 flex items-center justify-between border-b border-neutral-200/80 dark:border-neutral-800/60 transition-transform duration-500 ease-out"
+>
+  <div class="relative z-50 pointer-events-none">
+    <div class="w-fit border border-neutral-200/80 dark:border-neutral-800/80 bg-neutral-50/50 dark:bg-neutral-900/40 backdrop-blur-md px-4 py-2 rounded-full text-xs font-secondary md:text-sm pointer-events-auto lowercase tracking-[-0.03em] text-neutral-800 dark:text-neutral-200 shadow-sm shadow-black/5 dark:shadow-black/20 lg:text-[16px]">
+      {pill}
+    </div>
+  </div>
+
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 transition-opacity duration-300 hover:opacity-80">
+    <Image src={Logo} alt="diptangshu Debnath Logo" class="w-auto h-8 md:h-8" loading="eager"/>
+  </div>
+
+  <div class="relative z-50">
+    <button 
+      id="custom-hamburger"
+      class="relative group focus:outline-none"
+      data-state="closed"
+      aria-label="Toggle Menu"
+    >
+      <div class="cursor-pointer relative flex items-center justify-center rounded-full w-11 h-11 bg-transparent border border-neutral-200/0 hover:border-neutral-300 dark:hover:border-neutral-800 transition-all duration-300 ease-out hover:scale-105 group-[[data-state=open]]:ring-4 group-[[data-state=open]]:ring-neutral-400/10 dark:group-[[data-state=open]]:ring-neutral-800/50">
+
+        <div class="relative flex flex-col justify-between w-5 h-3.5 transition-all duration-300 overflow-hidden">
+          
+          <div class="bg-neutral-800 dark:bg-neutral-200 h-[1.5px] w-full transition-all duration-300 origin-left group-[[data-state=open]]:translate-x-8"></div>
+          <div class="bg-neutral-800 dark:bg-neutral-200 h-[1.5px] w-full transition-all duration-300 group-[[data-state=open]]:translate-x-8 delay-75"></div>
+          <div class="bg-neutral-800 dark:bg-neutral-200 h-[1.5px] w-full transition-all duration-300 origin-left group-[[data-state=open]]:translate-x-8 delay-150"></div>
+
+          <div class="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-[40px] group-[[data-state=open]]:-translate-x-1/2 flex items-center justify-center w-5 h-5 transition-all duration-500">
+            <div class="absolute bg-neutral-800 dark:bg-neutral-200 h-[1.5px] w-5 transition-all duration-500 rotate-0 delay-300 group-[[data-state=open]]:rotate-45"></div>
+            <div class="absolute bg-neutral-800 dark:bg-neutral-200 h-[1.5px] w-5 transition-all duration-500 -rotate-0 delay-300 group-[[data-state=open]]:-rotate-45"></div>
+          </div>
+
+        </div>
+      </div>
+    </button>
+  </div>   
+</div>
+
+<div 
+  id="menu-overlay" 
+  class="fixed inset-0 z-40 bg-white/95 dark:bg-[#0a0a0a]/98 backdrop-blur-lg flex flex-col items-center justify-center opacity-0 pointer-events-none transition-all duration-500 ease-in-out"
+>
+  <nav class="flex flex-col items-center gap-6 text-3xl md:text-4xl font-secondary font-medium tracking-tight">
+    <a href="/" class="text-neutral-500 dark:text-neutral-400 transform transition-all duration-300 hover:text-neutral-900 dark:hover:text-white hover:translate-y-[-2px] lowercase">Home</a>
+    <a href="/solutions/" class="text-neutral-500 dark:text-neutral-400 transform transition-all duration-300 hover:text-neutral-900 dark:hover:text-white hover:translate-y-[-2px] lowercase">solutions</a>
+    <a href="/about/" class="text-neutral-500 dark:text-neutral-400 transform transition-all duration-300 hover:text-neutral-900 dark:hover:text-white hover:translate-y-[-2px] lowercase">about</a>
+    <a href="/work/" class="text-neutral-500 dark:text-neutral-400 transform transition-all duration-300 hover:text-neutral-900 dark:hover:text-white hover:translate-y-[-2px] lowercase">work</a>
+    <a href="/blog/" class="text-neutral-500 dark:text-neutral-400 transform transition-all duration-300 hover:text-neutral-900 dark:hover:text-white hover:translate-y-[-2px] lowercase">blog</a>
+  </nav>
+
+  <div class="absolute bottom-8 left-0 right-0 px-8">
+    <p class="text-[10px] uppercase tracking-[0.15em] text-neutral-400 dark:text-neutral-600 text-center font-secondary font-medium">
+      {footnote}
+    </p>
+  </div>
+</div>
+
+<script>
+  // --- OVERLAY CODE ENGINE ---
+  const menuBtn = document.getElementById('custom-hamburger');
+  const overlay = document.getElementById('menu-overlay');
+
+  if (menuBtn && overlay) {
+    menuBtn.addEventListener('click', () => {
+      const isOpen = menuBtn.getAttribute('data-state') === 'open';
+      
+      if (!isOpen) {
+        menuBtn.setAttribute('data-state', 'open');
+        overlay.classList.remove('opacity-0', 'pointer-events-none');
+        overlay.classList.add('opacity-100', 'pointer-events-auto');
+        document.body.style.overflow = 'hidden';
+      } else {
+        menuBtn.setAttribute('data-state', 'closed');
+        overlay.classList.remove('opacity-100', 'pointer-events-auto');
+        overlay.classList.add('opacity-0', 'pointer-events-none');
+        document.body.style.overflow = '';
+      }
+    });
+  }
+
+  // --- NAVBAR INACTIVITY TRACKER (SCROLL INTERACTION) ---
+  function initNavInactivityTracker() {
+    const navbar = document.getElementById('main-navbar');
+    const hamburger = document.getElementById('custom-hamburger');
+    if (!navbar) return;
+
+    let inactivityTimeout: number;
+    const INACTIVITY_LIMIT = 10000; // 10 SECONDS
+
+    function hideNavbar() {
+      if (hamburger && hamburger.getAttribute('data-state') === 'open') {
+        resetTimer();
+        return;
+      }
+      navbar?.classList.add('-translate-y-full');
+    }
+
+    function showNavbar() {
+      navbar?.classList.remove('-translate-y-full');
+    }
+
+    function resetTimer() {
+      showNavbar();
+      clearTimeout(inactivityTimeout);
+      inactivityTimeout = window.setTimeout(hideNavbar, INACTIVITY_LIMIT);
+    }
+
+    const activityEvents = ['mousemove', 'mousedown', 'touchstart', 'keydown', 'scroll'];
+
+    activityEvents.forEach(event => {
+      window.addEventListener(event, resetTimer, { passive: true });
+    });
+
+    resetTimer();
+
+    return () => {
+      clearTimeout(inactivityTimeout);
+      activityEvents.forEach(event => {
+        window.removeEventListener(event, resetTimer);
+      });
+    };
+  }
+
+  let cleanupTracker: (() => void) | undefined;
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    cleanupTracker = initNavInactivityTracker();
+  });
+  
+  document.addEventListener('astro:after-swap', () => {
+    if (cleanupTracker) cleanupTracker();
+    cleanupTracker = initNavInactivityTracker();
+  });
+</script>
