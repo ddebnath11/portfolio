@@ -11,16 +11,14 @@ interface Props {
 
 const { pill,
   footnote = "DIPTANGSHU DEBNATH'S PORTFOLIO"
-
-
 } = Astro.props;
 ---
 <div 
   id="main-navbar"
-  class="fixed top-0 left-0 w-full z-50 bg-white/70 dark:bg-[#0a0a0a]/70 backdrop-blur-md px-6 py-4 flex items-center justify-between border-b border-neutral-200/100 dark:border-neutral-800/100 transition-transform duration-500 ease-out"
+  class="fixed top-0 left-0 w-full z-50 bg-brand-bg/70 backdrop-blur-md px-6 py-4 flex items-center justify-between border-b border-brand-secondary/10 transition-transform duration-500 ease-out"
 >
   <div class="relative z-50 pointer-events-none">
-    <div class="w-fit border border-neutral-200/80 dark:border-neutral-800/80 bg-neutral-50/50 dark:bg-neutral-900/40 backdrop-blur-md px-4 py-2 rounded-full text-xs font-secondary md:text-sm pointer-events-auto lowercase tracking-[-0.03em] text-neutral-800 dark:text-neutral-200 shadow-sm shadow-black/5 dark:shadow-black/20 lg:text-[16px]">
+    <div class="w-fit border border-brand-secondary/20 bg-brand-bg/40 backdrop-blur-md px-4 py-2 rounded-full text-xs font-secondary md:text-sm pointer-events-auto lowercase tracking-[-0.03em] text-brand-secondary/80 shadow-sm shadow-brand-secondary/5 lg:text-[16px]">
       {pill}
     </div>
   </div>
@@ -36,17 +34,17 @@ const { pill,
       data-state="closed"
       aria-label="Toggle Menu"
     >
-      <div class="cursor-pointer relative flex items-center justify-center rounded-full w-11 h-11 bg-transparent border border-neutral-200/0 hover:border-neutral-300 dark:hover:border-neutral-800 transition-all duration-300 ease-out hover:scale-105 group-[[data-state=open]]:ring-4 group-[[data-state=open]]:ring-neutral-400/10 dark:group-[[data-state=open]]:ring-neutral-800/50">
+      <div class="cursor-pointer relative flex items-center justify-center rounded-full w-11 h-11 bg-transparent border border-brand-secondary/0 hover:border-brand-secondary/20 transition-all duration-300 ease-out hover:scale-105 group-[[data-state=open]]:ring-4 group-[[data-state=open]]:ring-brand-secondary/10">
 
         <div class="relative flex flex-col justify-between w-5 h-3.5 transition-all duration-300 overflow-hidden">
           
-          <div class="bg-neutral-800 dark:bg-neutral-200 h-[1.5px] w-full transition-all duration-300 origin-left group-[[data-state=open]]:translate-x-8"></div>
-          <div class="bg-neutral-800 dark:bg-neutral-200 h-[1.5px] w-full transition-all duration-300 group-[[data-state=open]]:translate-x-8 delay-75"></div>
-          <div class="bg-neutral-800 dark:bg-neutral-200 h-[1.5px] w-full transition-all duration-300 origin-left group-[[data-state=open]]:translate-x-8 delay-150"></div>
+          <div class="bg-brand-secondary h-[1.5px] w-full transition-all duration-300 origin-left group-[[data-state=open]]:translate-x-8"></div>
+          <div class="bg-brand-secondary h-[1.5px] w-full transition-all duration-300 group-[[data-state=open]]:translate-x-8 delay-75"></div>
+          <div class="bg-brand-secondary h-[1.5px] w-full transition-all duration-300 origin-left group-[[data-state=open]]:translate-x-8 delay-150"></div>
 
           <div class="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-[40px] group-[[data-state=open]]:-translate-x-1/2 flex items-center justify-center w-5 h-5 transition-all duration-500">
-            <div class="absolute bg-neutral-800 dark:bg-neutral-200 h-[1.5px] w-5 transition-all duration-500 rotate-0 delay-300 group-[[data-state=open]]:rotate-45"></div>
-            <div class="absolute bg-neutral-800 dark:bg-neutral-200 h-[1.5px] w-5 transition-all duration-500 -rotate-0 delay-300 group-[[data-state=open]]:-rotate-45"></div>
+            <div class="absolute bg-brand-secondary h-[1.5px] w-5 transition-all duration-500 rotate-0 delay-300 group-[[data-state=open]]:rotate-45"></div>
+            <div class="absolute bg-brand-secondary h-[1.5px] w-5 transition-all duration-500 -rotate-0 delay-300 group-[[data-state=open]]:-rotate-45"></div>
           </div>
 
         </div>
@@ -57,18 +55,18 @@ const { pill,
 
 <div 
   id="menu-overlay" 
-  class="fixed inset-0 z-40 bg-white/95 dark:bg-[#0a0a0a]/70 backdrop-blur-lg flex flex-col items-center justify-center opacity-0 pointer-events-none transition-all duration-500 ease-in-out backdrop-blur-md"
+  class="fixed inset-0 z-40 bg-brand-bg/95 backdrop-blur-lg flex flex-col items-center justify-center opacity-0 pointer-events-none transition-all duration-500 ease-in-out"
 >
   <nav class="flex flex-col items-center gap-6 text-3xl md:text-4xl font-secondary font-medium tracking-tight">
-    <a href="/" class="text-neutral-500 dark:text-neutral-400 transform transition-all duration-300 hover:text-neutral-900 dark:hover:text-white hover:translate-y-[-2px] lowercase">Home</a>
-    <a href="/solutions/" class="text-neutral-500 dark:text-neutral-400 transform transition-all duration-300 hover:text-neutral-900 dark:hover:text-white hover:translate-y-[-2px] lowercase">solutions</a>
-    <a href="/about/" class="text-neutral-500 dark:text-neutral-400 transform transition-all duration-300 hover:text-neutral-900 dark:hover:text-white hover:translate-y-[-2px] lowercase">about</a>
-    <a href="/work/" class="text-neutral-500 dark:text-neutral-400 transform transition-all duration-300 hover:text-neutral-900 dark:hover:text-white hover:translate-y-[-2px] lowercase">work</a>
-    <a href="/blog/" class="text-neutral-500 dark:text-neutral-400 transform transition-all duration-300 hover:text-neutral-900 dark:hover:text-white hover:translate-y-[-2px] lowercase">blog</a>
+    <a href="/" class="text-brand-secondary/60 transform transition-all duration-300 hover:text-brand-secondary hover:translate-y-[-2px] lowercase">Home</a>
+    <a href="/solutions/" class="text-brand-secondary/60 transform transition-all duration-300 hover:text-brand-secondary hover:translate-y-[-2px] lowercase">solutions</a>
+    <a href="/about/" class="text-brand-secondary/60 transform transition-all duration-300 hover:text-brand-secondary hover:translate-y-[-2px] lowercase">about</a>
+    <a href="/work/" class="text-brand-secondary/60 transform transition-all duration-300 hover:text-brand-secondary hover:translate-y-[-2px] lowercase">work</a>
+    <a href="/blog/" class="text-brand-secondary/60 transform transition-all duration-300 hover:text-brand-secondary hover:translate-y-[-2px] lowercase">blog</a>
   </nav>
 
   <div class="absolute bottom-8 left-0 right-0 px-8">
-    <p class="text-[10px] uppercase tracking-[0.15em] text-neutral-400 dark:text-neutral-600 text-center font-secondary font-medium">
+    <p class="text-[10px] uppercase tracking-[0.15em] text-brand-secondary/40 text-center font-secondary font-medium">
       {footnote}
     </p>
   </div>
@@ -118,9 +116,10 @@ const { pill,
       navbar?.classList.remove('-translate-y-full');
     }
 
+    // Explicit type checking fix for window tracking
     function resetTimer() {
       showNavbar();
-      clearTimeout(inactivityTimeout);
+      window.clearTimeout(inactivityTimeout);
       inactivityTimeout = window.setTimeout(hideNavbar, INACTIVITY_LIMIT);
     }
 
@@ -133,7 +132,7 @@ const { pill,
     resetTimer();
 
     return () => {
-      clearTimeout(inactivityTimeout);
+      window.clearTimeout(inactivityTimeout);
       activityEvents.forEach(event => {
         window.removeEventListener(event, resetTimer);
       });

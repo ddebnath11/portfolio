@@ -7,11 +7,39 @@
 @import "tailwindcss";
 
 /* TAILWIND V4 THEME ENGINE Configuration */
-@theme {
-  --color-brand-bg: #0a0a0a;  
-  --color-brand-text: #ffffff;
-  --font-primary: "Space Grotesk", sans-serif;
+@import "tailwindcss";
 
+@theme {
+  /* Static Tokens (Global constants across ALL themes) */
+  --font-primary: "Space Grotesk", sans-serif;
+  --color-brand-primary: #a3d1ff;
+
+  /* Semantic Variables (The abstract names you use in your HTML classes) */
+  --color-brand-bg: var(--bg);
+  --color-brand-secondary: var(--secondary);
+}
+
+/* Theme Definitions Map */
+:root {
+  /* 🌙 Default Baseline: DARK MODE */
+  --bg: #0a0a0a;  
+  --secondary: #ffffff;
+}
+
+:root[data-theme="light"] {
+  /* ☀️ Optional Swap: LIGHT MODE */
+  --bg: #e0e0e0;  
+  --secondary: #0a0a0a;
+}
+
+:root[data-theme="cyberpunk"] {
+  /* Bonus: CYBERPUNK MODE */
+  --bg: #120136;
+  --secondary: #00ffcc;
+  --color-brand-primary: #ff007f;
+}
+
+@theme {
   /* ANIMATION */
   --animate-fluid-float: bounce 2.4s cubic-bezier(0.45, 0, 0.55, 1) infinite;
   --animate-fade-in: customFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -98,6 +126,6 @@
 
 
 ::-moz-selection {
-  background-color: #5cff74;
+  background-color: #a3d1ff;
   color: var(--color-brand-bg);  
 }
