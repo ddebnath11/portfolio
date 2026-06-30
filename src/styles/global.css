@@ -14,14 +14,14 @@
   --font-primary: "Space Grotesk", sans-serif;
   --color-brand-primary: #a3d1ff;
 
-  /* Semantic Variables (The abstract names you use in your HTML classes) */
+  /* VARIABLES */
   --color-brand-bg: var(--bg);
   --color-brand-secondary: var(--secondary);
 }
 
 /* Theme Definitions Map */
 :root {
-  /* 🌙 Default Baseline: DARK MODE */
+  /* Default Baseline: DARK MODE */
   --bg: #0a0a0a;  
   --secondary: #ffffff;
   --secondary-encoded: %23ffffff;
@@ -30,19 +30,19 @@
 
 }
 
-:root[data-theme="light"] {
-  /* ☀️ Optional Swap: LIGHT MODE */
-  --bg: #e0e0e0;  
-  --secondary: #0a0a0a;
+:root[data-theme="github"] {
+  /* GITHUB */
+  --bg: #0D1117;  
+  --secondary: #ffffff;
   --secondary-encoded: %230a0a0a;
-  --color-brand-primary: #025bb4;
+  --color-brand-primary: #238636;
 }
 
-:root[data-theme="cyberpunk"] {
-  /* Bonus: CYBERPUNK MODE */
-  --bg: #120136;
-  --secondary: #00ffcc;
-  --color-brand-primary: #ff007f;
+:root[data-theme="skynet"] {
+  
+  --bg: #0a0a0a;
+  --secondary: #ffffff;
+  --color-brand-primary: #c16bfa;
   --secondary-encoded: %2300ffcc;
 }
 

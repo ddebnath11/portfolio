@@ -9,7 +9,6 @@ interface Props {
 const { title = "Diptangshu Debnath", subtitle ,pill} = Astro.props;
 import '../styles/global.css';
 import Navigation from '../components/site-wide-systems/Navigation.astro'
-import Controls from '../components/site-wide-systems/Controls.astro';
 ---
 
 <html lang="en">
@@ -27,7 +26,6 @@ import Controls from '../components/site-wide-systems/Controls.astro';
        <slot />
 
     
-    <Controls />
   </body>
 
 </html>

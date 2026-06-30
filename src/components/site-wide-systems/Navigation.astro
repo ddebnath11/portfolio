@@ -3,6 +3,7 @@
 import '../../styles/global.css';
 import { Image } from 'astro:assets';
 import Logo from '../assets/logo-main.svg';
+import Controls from './Controls.astro';
 
 interface Props {
   pill: string;
@@ -73,7 +74,8 @@ const { pill,
 <div 
   id="menu-overlay" 
   class="fixed inset-0 z-40 bg-brand-bg/95 backdrop-blur-lg flex flex-col items-center justify-center opacity-0 pointer-events-none transition-all duration-500 ease-in-out"
->
+>  
+
   <nav class="flex flex-col items-center gap-6 text-3xl md:text-4xl font-secondary font-medium tracking-tight">
     <a href="/" class="text-brand-secondary/60 transform transition-all duration-300 hover:text-brand-secondary hover:translate-y-[-2px]">Home</a>
     <a href="/work/" class="text-brand-secondary/60 transform transition-all duration-300 hover:text-brand-secondary hover:translate-y-[-2px] ">Work</a>
@@ -82,11 +84,15 @@ const { pill,
     <a href="/blog/" class="text-brand-secondary/60 transform transition-all duration-300 hover:text-brand-secondary hover:translate-y-[-2px] ">Blog</a>
   </nav>
 
-  <div class="absolute bottom-8 left-0 right-0 px-8">
+  <div class="absolute top-28 left-0 right-0 px-8 pointer-events-none flex flex-col items-center gap-4">
     <p class="text-[10px] uppercase tracking-[0.15em] text-brand-secondary/40 text-center font-secondary font-medium">
       {footnote}
     </p>
+
   </div>
+
+  <Controls />
+  
 </div>
 
 <script>
