@@ -24,12 +24,18 @@
   /* 🌙 Default Baseline: DARK MODE */
   --bg: #0a0a0a;  
   --secondary: #ffffff;
+  --secondary-encoded: %23ffffff;
+
+  --cursor-default: url("/custom-cursor.svg") 6 2, auto;
+
 }
 
 :root[data-theme="light"] {
   /* ☀️ Optional Swap: LIGHT MODE */
   --bg: #e0e0e0;  
   --secondary: #0a0a0a;
+  --secondary-encoded: %230a0a0a;
+  --color-brand-primary: #1c8eff;
 }
 
 :root[data-theme="cyberpunk"] {
@@ -37,6 +43,7 @@
   --bg: #120136;
   --secondary: #00ffcc;
   --color-brand-primary: #ff007f;
+  --secondary-encoded: %2300ffcc;
 }
 
 @theme {
@@ -120,12 +127,19 @@
 
 /* EXTRAS */
 ::selection {
-  background-color: #a3d1ff; 
+  background-color: var(--color-brand-primary); 
   color: var(--color-brand-bg);            
 }
 
 
 ::-moz-selection {
-  background-color: #a3d1ff;
+  background-color: var(--color-brand-primary); 
   color: var(--color-brand-bg);  
+}
+
+@layer base {
+  html, body {
+    cursor: var(--cursor-default);
+    
+  }
 }

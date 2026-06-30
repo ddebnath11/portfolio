@@ -1,41 +1,61 @@
 ---
 import { Image } from 'astro:assets';
 import downArrow from '../../assets/downarrow.svg'
-
+import CTA from '../buttons/CTA.astro';
+import dDImg from '/dDimg.webp'
 ---
 <div class="p-4 lg:px-30">
-<div class="w-full flex flex-col items-center justify-start text-center gap-6 md:gap-8 pt-28 md:pt-24 pb-12">
+  <div class="w-full flex flex-col items-center justify-start text-center gap-6 md:gap-8 pt-28 md:pt-24 pb-12">
 
-  <div class="animate-blur-in flex flex-col items-center justify-start gap-6 md:gap-8">
+    <div class="animate-blur-in flex flex-col items-center justify-start gap-6 md:gap-8">
+      <div class="w-[72px] h-[72px] border border-brand-secondary/20 rounded-2xl lg:w-[100px] lg:h-[100px] lg:rounded-3xl">
 
-      <div class="w-[72px] h-[72px] border border-neutral-200/20 rounded-2xl lg:w-[100px] lg:h-[100px] lg:rounded-3xl">
+        <Image 
+          src="/dDimg.webp" 
+          alt="Diptangshu Debnath avatar" 
+          width={100} 
+          height={100} 
+          class="w-full h-full object-cover rounded-2xl"
+          loading="eager"
 
+        />
+
+
+
+
+        </div>
+
+      <h1 class="text-4xl md:text-6xl lg:text-7xl text-brand-secondary font-primary tracking-[-0.03em] leading-normal">
+        Hello world! I'm Diptangshu
+      </h1>
+    </div>
+
+    <p class="font-secondary text-sm text-brand-secondary md:text-sm lg:text-[20px] animate-reveal-up md:text-[16px]">
+      Product Engineer based in Jaipur.
+    </p>
+
+    <CTA />
+
+    <div class="flex flex-col items-center justify-center gap-2 cursor-pointer select-none animate-fade-up text-brand-secondary/60 hover:text-brand-secondary transition-colors duration-300 mt-12">
+      <div class="text-xs md:text-sm font-secondary tracking-widest uppercase animate-fluid-float">
+        Scroll
       </div>
 
-      <h1 class="text-4xl md:text-6xl lg:text-7xl text-brand-secondary font-primary tracking-[-0.03em] leading-normal">Hello world! I'm Diptangshu</h1>
-        
-      
+      <svg 
+        class="w-6 h-6 animate-fluid-float" 
+        viewBox="0 0 48 48" 
+        fill="currentColor" 
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g>
+          <path d="M31.859,32.272c-0.391-0.391-1.023-0.391-1.414,0l-7.734,7.734V23h3c0.553,0,1-0.448,1-1s-0.447-1-1-1h-3v-4h3
+            c0.553,0,1-0.448,1-1s-0.447-1-1-1h-3V0h-2v15h-3c-0.553,0-1,0.448-1,1s0.447,1,1,1h3v4h-3c-0.553,0-1,0.448-1,1s0.447,1,1,1h3
+            v17.007l-7.734-7.734c-0.391-0.391-1.023-0.391-1.414,0c-0.391,0.391-0.391,1.023,0,1.414l9.441,9.441
+            c0.195,0.195,0.451,0.293,0.707,0.293s0.512-0.098,0.707-0.293l9.441-9.441C32.25,33.296,32.25,32.663,31.859,32.272z M21.704,41
+            h0.014l-0.007,0.007L21.704,41z"/>
+        </g>
+      </svg>
+    </div>
+
   </div>
-
-  <p class="font-secondary text-sm text-brand-secondary md:text-sm lg:text-[20px] animate-reveal-up">Product Engineer based in Jaipur.</p>
-
-  <div class="animate-fade-up">
-
-    
-
-  </div>
-
-  <div class="flex flex-col items-center justify-center gap-1 cursor-pointer select-none animate-fade-up text-brand-secondary/60 hover:text-brand-secondary transition-colors duration-300 ">
-  <div class="text-xs md:text-sm font-secondary tracking-widest uppercase animate-fluid-float">Scroll</div>
-  <Image src={downArrow} alt="Down Arrow" class="w-4 h-4 md:w-5 md:h-5 opacity-80 animate-fluid-float" />
 </div>
-
-
-
-
-
-
-</div>
-
-</div>
-
