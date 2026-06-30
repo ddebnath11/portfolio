@@ -35,7 +35,7 @@
   --bg: #e0e0e0;  
   --secondary: #0a0a0a;
   --secondary-encoded: %230a0a0a;
-  --color-brand-primary: #1c8eff;
+  --color-brand-primary: #025bb4;
 }
 
 :root[data-theme="cyberpunk"] {
