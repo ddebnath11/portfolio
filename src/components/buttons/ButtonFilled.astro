@@ -1,0 +1,14 @@
+---
+interface Props {
+  buttonAction: string;
+  url?: string;
+}
+
+const { buttonAction, url } = Astro.props;
+---
+<a 
+  href={url}
+  class="inline-flex items-center justify-center border border-brand-primary py-1.5 px-5 rounded-full bg-brand-primary text-brand-bg cursor-pointer transform transition-all duration-300 text-xs font-medium no-underline hover:text-brand-secondary hover:bg-brand-bg hover:border-brand-secondary hover:-translate-y-0.5 hover:shadow-[0_3px_0_0_var(--color-brand-secondary)] active:translate-y-0 active:shadow-none md:py-2 md:px-5 md:text-sm lg:py-2.5 lg:px-6 lg:text-[16px]"
+>
+  {buttonAction}
+</a>

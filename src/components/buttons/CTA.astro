@@ -2,9 +2,10 @@
 interface Props {
   buttonAction: string;
   url: string;
+  shortcut?:string
 }
 
-const { buttonAction, url } = Astro.props;
+const { buttonAction, url, shortcut} = Astro.props;
 ---
 <a 
   href={url}
