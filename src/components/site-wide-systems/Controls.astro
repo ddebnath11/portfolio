@@ -114,24 +114,41 @@
 
 <script>
   function initThemeSwitcher() {
-    const buttons = document.querySelectorAll('.theme-btn');
     
-    const savedTheme = localStorage.getItem('portfolio-theme');
-    if (savedTheme) {
-      document.documentElement.setAttribute('data-theme', savedTheme);
-    }
+    const themes = ['dark', 'github', 'skynet'];
+    
+    
+    const savedTheme = localStorage.getItem('portfolio-theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
 
-    buttons.forEach(button => {
-      button.addEventListener('click', () => {
-        const selectedTheme = button.getAttribute('data-theme-set');
-        if (!selectedTheme) return;
+    document.addEventListener("keydown", (e) => {
+      
+      const target = e.target as HTMLElement;
+      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) {
+        return;
+      }
 
-        document.documentElement.setAttribute('data-theme', selectedTheme);
-        localStorage.setItem('portfolio-theme', selectedTheme);
-      });
+      
+      if (e.key.toLowerCase() === 'd' && e.shiftKey) {
+        e.preventDefault(); 
+        
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+        
+        
+        let currentIndex = themes.indexOf(currentTheme);
+        
+        
+        let nextIndex = (currentIndex + 1) % themes.length;
+        const nextTheme = themes[nextIndex];
+
+        
+        document.documentElement.setAttribute('data-theme', nextTheme);
+        localStorage.setItem('portfolio-theme', nextTheme);
+      }
     });
   }
 
+  
   document.addEventListener('DOMContentLoaded', initThemeSwitcher);
   document.addEventListener('astro:after-swap', initThemeSwitcher);
 </script>

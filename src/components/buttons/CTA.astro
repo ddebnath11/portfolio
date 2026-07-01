@@ -1,4 +1,9 @@
 ---
+interface Props {
+  buttonAction:string;
+}
+
+const {buttonAction} = Astro.props;
 ---
 <button class="border border-brand-primary p-4 rounded-full bg-brand-primary text-brand-bg cursor-pointer transform transition-all duration-300 text-sm hover:text-brand-secondary hover:bg-brand-bg hover:border-brand-secondary
 
@@ -11,5 +16,5 @@ lg:p-5
 lg:text-[20px]
 
 ">
-  Get Started
+  {buttonAction}
 </button>

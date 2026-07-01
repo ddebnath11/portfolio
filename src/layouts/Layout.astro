@@ -29,3 +29,19 @@ import Navigation from '../components/site-wide-systems/Navigation.astro'
   </body>
 
 </html>
+
+<script>
+  console.log("Hi.")
+
+  document.addEventListener("keydown", (e) => {
+    const target = e.target as HTMLElement;
+    if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) {
+      return;
+    }
+
+    if (e.key.toLowerCase() === 'p' && e.shiftKey) {
+      e.preventDefault(); 
+      window.location.href = "/portfolio/";
+    }
+  });
+</script>
