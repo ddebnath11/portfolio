@@ -39,9 +39,31 @@ import Navigation from '../components/site-wide-systems/Navigation.astro'
       return;
     }
 
+    if (e.key.toLowerCase() === 'h' && e.shiftKey) {
+      e.preventDefault(); 
+      window.location.href = "/";
+    }
+
     if (e.key.toLowerCase() === 'p' && e.shiftKey) {
       e.preventDefault(); 
       window.location.href = "/portfolio/";
     }
+
+    if (e.key.toLowerCase() === 'w' && e.shiftKey) {
+      e.preventDefault(); 
+      window.location.href = "/work/";
+    }
+
+    if (e.key.toLowerCase() === 'b' && e.shiftKey) {
+      e.preventDefault(); 
+      window.location.href = "/blog/";
+    }
+
+    if (e.key.toLowerCase() === 'c' && e.shiftKey) {
+      e.preventDefault(); 
+      window.location.href = "/contact/";
+    }
+
+    
   });
 </script>
