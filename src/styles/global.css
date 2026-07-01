@@ -35,14 +35,14 @@
   --bg: #0D1117;  
   --secondary: #ffffff;
   --secondary-encoded: %230a0a0a;
-  --color-brand-primary: #238636;
+  --color-brand-primary: #86ff9e;
 }
 
 :root[data-theme="skynet"] {
   
   --bg: #0a0a0a;
   --secondary: #ffffff;
-  --color-brand-primary: #c16bfa;
+  --color-brand-primary: #d79aff;
   --secondary-encoded: %2300ffcc;
 }
 
