@@ -10,16 +10,23 @@ import CTAoutline from '../buttons/CTAoutline.astro';
 
     <div class="animate-blur-in flex flex-col items-center justify-start gap-6 md:gap-8">
 
-      <h1 class="text-4xl md:text-6xl lg:text-7xl text-brand-secondary font-primary tracking-[-0.03em] leading-normal">
+      <div 
+        id="ist-clock"
+        class="border border-brand-secondary/10 text-xs p-2 px-3 rounded-full tracking-widest text-brand-secondary"
+      >
+        --:-- IST
+      </div>
+
+      <h1 class="text-4xl md:text-6xl lg:text-7xl text-brand-secondary font-primary tracking-[-0.03em] leading-normal font-bold">
         Hello! I'm Diptangshu
       </h1>
     </div>
 
-    <p class="font-secondary text-sm text-brand-secondary md:text-sm lg:text-[20px] animate-reveal-up md:text-[16px]">
-      A Computer Science Student.
+    <p class="font-secondary text-sm text-brand-secondary/90 md:text-sm lg:text-[20px] animate-reveal-up md:text-[16px] lg:text-[20px]">
+      I'm a Software Developer and Artist based in Kolkata, India.
     </p>
     <div class="flex flex-row gap-4">
-        <CTA buttonAction='View Portfolio' url="/portfolio" shortcut='Shift + P'/>
+        <CTA buttonAction='View Projects' url="/projects" shortcut='Shift + P'/>
 
         <CTAoutline href="https://github.com/ddebnath11" ariaLabel="Visit my GitHub profile">
               <svg class="w-5 h-5 md:w-6 md:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -27,6 +34,14 @@ import CTAoutline from '../buttons/CTAoutline.astro';
                 <path d="M9 18c-4.51 2-5-2-7-2" />
               </svg>
         </CTAoutline>
+
+        <CTAoutline href="https://www.linkedin.com/in/diptangshu-debnath-362326273/" ariaLabel="Visit my LinkedIn profile">
+  <svg class="w-5 h-5 md:w-6 md:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+    <rect x="2" y="9" width="4" height="12" />
+    <circle cx="4" cy="4" r="2" />
+  </svg>
+</CTAoutline>
 
         
     </div>
@@ -54,3 +69,28 @@ import CTAoutline from '../buttons/CTAoutline.astro';
 
   </div>
 </div>
+
+<script>
+  function updateISTClock() {
+    const clockElement = document.getElementById('ist-clock');
+    if (!clockElement) return;
+
+    const options: Intl.DateTimeFormatOptions = {
+      timeZone: 'Asia/Kolkata',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true
+    };
+
+    const now = new Date();
+    
+    const istTimeString = now.toLocaleTimeString('en-US', options);
+    
+    clockElement.textContent = `${istTimeString} IST`;
+  }
+
+  
+  updateISTClock();
+  
+  setInterval(updateISTClock, 1000);
+</script>

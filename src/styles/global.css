@@ -14,7 +14,7 @@
 @theme {
   /* Static Tokens (Global constants across ALL themes) */
   --font-primary: "Manrope", sans-serif;
-  --color-brand-primary: #a3d1ff;
+  --color-brand-primary: #86ff9e;
 
   /* VARIABLES */
   --color-brand-bg: var(--bg);
@@ -24,7 +24,7 @@
 /* Theme Definitions Map */
 :root {
   /* Default Baseline: DARK MODE */
-  --bg: #0a0a0a;  
+  --bg: #0D1117;  
   --secondary: #ffffff;
   --secondary-encoded: %23ffffff;
 
@@ -34,17 +34,17 @@
 
 :root[data-theme="github"] {
   /* GITHUB */
-  --bg: #0D1117;  
+  --bg: #0d0e17;  
   --secondary: #ffffff;
   --secondary-encoded: %230a0a0a;
-  --color-brand-primary: #86ff9e;
+  --color-brand-primary: #90bbff;
 }
 
 :root[data-theme="skynet"] {
   
-  --bg: #0a0a0a;
+  --bg: #170d17;
   --secondary: #ffffff;
-  --color-brand-primary: #d79aff;
+  --color-brand-primary: #e0b1ff;
   --secondary-encoded: %2300ffcc;
 }
 

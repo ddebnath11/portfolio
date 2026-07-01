@@ -31,8 +31,6 @@ import Navigation from '../components/site-wide-systems/Navigation.astro'
 </html>
 
 <script>
-  console.log("Hi.")
-
   document.addEventListener("keydown", (e) => {
     const target = e.target as HTMLElement;
     if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) {
@@ -46,12 +44,12 @@ import Navigation from '../components/site-wide-systems/Navigation.astro'
 
     if (e.key.toLowerCase() === 'p' && e.shiftKey) {
       e.preventDefault(); 
-      window.location.href = "/portfolio/";
+      window.location.href = "/projects/";
     }
 
-    if (e.key.toLowerCase() === 'w' && e.shiftKey) {
+    if (e.key.toLowerCase() === 'a' && e.shiftKey) {
       e.preventDefault(); 
-      window.location.href = "/work/";
+      window.location.href = "/av/";
     }
 
     if (e.key.toLowerCase() === 'b' && e.shiftKey) {
@@ -59,11 +57,12 @@ import Navigation from '../components/site-wide-systems/Navigation.astro'
       window.location.href = "/blog/";
     }
 
-    if (e.key.toLowerCase() === 'c' && e.shiftKey) {
-      e.preventDefault(); 
-      window.location.href = "/contact/";
-    }
-
     
   });
+</script>
+
+<script>
+  console.log("Welcome to the console! You will find some interesting things here...");
+
+  console.log("Switch Themes using Shift+D")
 </script>
