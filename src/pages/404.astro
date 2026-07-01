@@ -1,10 +1,11 @@
 ---
+import CTA from "../components/buttons/CTA.astro";
 import Intro from "../components/sections/portfolio-page-components/Intro.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 <Layout title="Page Not Found!" subtitle="Try Again" pill="the void">
 
-  <div class="p-5 pt-20">
+  <div class="p-5 pt-20 flex flex-col items-center">
 
  
   <Intro 
@@ -12,6 +13,8 @@ import Layout from "../layouts/Layout.astro";
       title="This page doesn't exist. Check that link again." 
       subtitle="This page is either under construction or never existed in the first place."
   />
+
+  <CTA buttonAction="Back to Home" url="/"></CTA>
  
 
   </div>
