@@ -1,12 +1,7 @@
-# My Website
-(emphasis on "my")
+# My Website (UNDER CONSTRUCTION)
 
 ## Introduction
-What is a portfolio website? And more importantly, who should you build it for? You usually have two ways:
-- You build for yourself, and risk not getting hired because the recruiter doesn't wanna read a whole novel about you.
-- You build for recruiters, which results in a fast-loading and highly scannable website for recruiters, but it looks mind-numbingly boring and doesn't reflect who you are as a person.
+I'm currently building projects to put on the portfolio. So this is website is under construction. You can visit the (website)[https://ddebnath.netlify.app/] and follow my journey as a designer, developer and artist! 
 
-**So which way should you take?**
 
-I am currently developing this website to be the best of both worlds. If you're a recruiter and you only need to know what I can do, visit the /portfolio page. If you are a fellow programmer, explore everything. 
 
