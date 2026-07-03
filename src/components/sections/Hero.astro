@@ -10,28 +10,37 @@ import CTAoutline from '../buttons/CTAoutline.astro';
 
     <div class="animate-blur-in flex flex-col items-center justify-start gap-6 md:gap-8">
 
-      <div 
+      { /*<div 
         id="ist-clock"
         class="border border-brand-secondary/10 text-xs p-2 px-3 rounded-full tracking-widest text-brand-secondary"
       >
         --:-- IST
+      </div> */ }
+      <div id="theme-changer" onclick="initThemeSwitcher()" class="cursor-pointer flex flex-col gap-6 md:gap-8 items-center justify-start">
+            <div 
+              id="character-dialogue"
+              class="border border-brand-secondary/10 text-xs p-2 px-3 rounded-full tracking-widest text-brand-secondary"
+            >
+              CLICK ME!
+            </div>
+
+            <div class="h-[100px] w-[100px] flex flex-col">
+
+              <svg width="100" height="100" viewBox="0 0 722 722" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 360C0 161.178 162.177 0 361 0V0C559.823 0 722 161.178 722 360V722H0V360Z" class="fill-brand-primary"/>
+                
+                <circle cx="95.5" cy="95.5" r="95.5" class="fill-brand-secondary"/>
+                <circle cx="626.5" cy="95.5" r="95.5" class="fill-brand-secondary"/>
+                
+                <circle cx="125" cy="67" r="29" class="fill-brand-bg"/>
+                <circle cx="598" cy="67" r="29" class="fill-brand-bg"/>
+                
+                <path d="M474 300.5C474 312.516 471.077 324.414 465.398 335.516C459.72 346.617 451.396 356.704 440.903 365.2C430.41 373.697 417.953 380.437 404.243 385.035C390.533 389.633 375.839 392 361 392C346.161 392 331.467 389.633 317.757 385.035C304.047 380.437 291.59 373.697 281.097 365.2C270.604 356.704 262.28 346.617 256.602 335.516C250.923 324.414 248 312.516 248 300.5L361 300.5H474Z" class="fill-brand-secondary"/>
+              </svg>
+            </div>
       </div>
 
-      <div class="h-[100px] w-[100px]">
-        <svg width="100" height="100" viewBox="0 0 722 722" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0 360C0 161.178 162.177 0 361 0V0C559.823 0 722 161.178 722 360V722H0V360Z" class="fill-brand-primary"/>
-          
-          <circle cx="95.5" cy="95.5" r="95.5" class="fill-brand-secondary"/>
-          <circle cx="626.5" cy="95.5" r="95.5" class="fill-brand-secondary"/>
-          
-          <circle cx="125" cy="67" r="29" class="fill-brand-bg"/>
-          <circle cx="598" cy="67" r="29" class="fill-brand-bg"/>
-          
-          <path d="M474 300.5C474 312.516 471.077 324.414 465.398 335.516C459.72 346.617 451.396 356.704 440.903 365.2C430.41 373.697 417.953 380.437 404.243 385.035C390.533 389.633 375.839 392 361 392C346.161 392 331.467 389.633 317.757 385.035C304.047 380.437 291.59 373.697 281.097 365.2C270.604 356.704 262.28 346.617 256.602 335.516C250.923 324.414 248 312.516 248 300.5L361 300.5H474Z" class="fill-brand-secondary"/>
-        </svg>
-      </div>
-
-      <h1 class="text-4xl md:text-6xl lg:text-7xl text-brand-secondary font-primary tracking-[-0.03em] leading-normal font-bold">
+      <h1 class="text-4xl md:text-6xl lg:text-6xl text-brand-secondary font-primary tracking-[-0.03em] leading-normal font-bold">
         Hello! I'm Diptangshu
       </h1>
     </div>
@@ -40,7 +49,7 @@ import CTAoutline from '../buttons/CTAoutline.astro';
       I'm a Software Developer and Artist based in Kolkata, India.
     </p>
     
-    <div class="flex flex-row gap-4">
+    <div class="flex flex-row gap-2 lg:gap-4">
         <CTA buttonAction='View Projects' url="/projects" shortcut='Shift + P'/>
 
         <CTAoutline href="https://github.com/ddebnath11" ariaLabel="Visit my GitHub profile">
@@ -80,4 +89,33 @@ import CTAoutline from '../buttons/CTAoutline.astro';
 
   updateISTClock();
   setInterval(updateISTClock, 1000);
+</script>
+
+<script>
+  function initThemeSwitcher() {
+    const themes = ['dark', 'github', 'skynet'];
+    
+    const savedTheme = localStorage.getItem('portfolio-theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+
+    const triggerButton = document.getElementById('theme-changer');
+    if (!triggerButton) return;
+
+    triggerButton.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+      
+      let currentIndex = themes.indexOf(currentTheme);
+      let nextIndex = (currentIndex + 1) % themes.length;
+      const nextTheme = themes[nextIndex];
+
+      document.documentElement.setAttribute('data-theme', nextTheme);
+      localStorage.setItem('portfolio-theme', nextTheme);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initThemeSwitcher);
+  document.addEventListener('astro:after-swap', initThemeSwitcher);
+
 </script>

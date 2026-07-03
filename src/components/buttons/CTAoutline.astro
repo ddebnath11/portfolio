@@ -14,14 +14,14 @@ const { buttonAction, ariaLabel, href } = Astro.props;
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      class="inline-flex items-center justify-center border border-brand-primary p-4 rounded-full bg-transparent text-brand-primary cursor-pointer transform transition-all duration-300 text-sm hover:text-brand-secondary hover:bg-brand-bg hover:border-brand-secondary hover:-translate-y-0.5 hover:shadow-[0_4px_0_0_var(--color-brand-secondary)] active:translate-y-0 active:shadow-none md:p-4.5 md:text-[16px] lg:p-5 lg:text-[20px]"
+      class="inline-flex items-center justify-center border-2 border-brand-primary p-4 rounded-full bg-transparent text-brand-primary cursor-pointer transform transition-all duration-300 text-sm hover:text-brand-secondary hover:bg-brand-bg hover:border-brand-secondary hover:-translate-y-0.5 hover:shadow-[0_4px_0_0_var(--color-brand-secondary)] active:translate-y-0 active:shadow-none md:p-4.5 md:text-[16px] lg:p-5 lg:text-[20px]"
       aria-label={ariaLabel}
     >
       <slot />
     </a>
   ) : (
     <button 
-      class="inline-flex items-center justify-center border border-brand-primary p-4 rounded-full bg-transparent text-brand-primary cursor-pointer transform transition-all duration-300 text-sm hover:text-brand-secondary hover:bg-brand-bg hover:border-brand-secondary hover:-translate-y-0.5 hover:shadow-[0_4px_0_0_var(--color-brand-secondary)] active:translate-y-0 active:shadow-none md:p-4.5 md:text-[16px] lg:p-5 lg:text-[20px]"
+      class="inline-flex items-center justify-center border-2 border-brand-primary p-4 rounded-full bg-transparent text-brand-primary cursor-pointer transform transition-all duration-300 text-sm hover:text-brand-secondary hover:bg-brand-bg hover:border-brand-secondary hover:-translate-y-0.5 hover:shadow-[0_4px_0_0_var(--color-brand-secondary)] active:translate-y-0 active:shadow-none md:p-4.5 md:text-[16px] lg:p-5 lg:text-[20px]"
       aria-label={ariaLabel}
       onclick="window.location.href=`${ href }`"
     >
