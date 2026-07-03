@@ -14,7 +14,7 @@
 @theme {
   /* Static Tokens (Global constants across ALL themes) */
   --font-primary: "Manrope", sans-serif;
-  --color-brand-primary: #86ff9e;
+  --color-brand-primary: #90bbff;
 
   /* VARIABLES */
   --color-brand-bg: var(--bg);
@@ -37,7 +37,7 @@
   --bg: #0d0e17;  
   --secondary: #ffffff;
   --secondary-encoded: %230a0a0a;
-  --color-brand-primary: #90bbff;
+  --color-brand-primary: #60fe87;
 }
 
 :root[data-theme="skynet"] {
