@@ -14,7 +14,7 @@
 @theme {
   /* Static Tokens (Global constants across ALL themes) */
   --font-primary: "Manrope", sans-serif;
-  --color-brand-primary: #2d32ad;
+  --color-brand-primary: #5065db;
 
   /* VARIABLES */
   --color-brand-bg: var(--bg);
@@ -25,7 +25,7 @@
 /* Theme Definitions Map */
 :root {
   /* Default Baseline: DARK MODE */
-  --bg: #02021d;  
+  --bg: #010113;  
   --secondary: #ffffff;
   --secondary-encoded: %23ffffff;
   --tertiary: #ffffff;
@@ -54,7 +54,7 @@
 
 @theme {
   /* ANIMATION */
-  --animate-fluid-float: bounce 2.4s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  --animate-fluid-float: bounce 2.5s cubic-bezier(0.45, 0, 0.55, 1) infinite;
   --animate-fade-in: customFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   --animate-fade-up: customFadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   --animate-fade-down: customFadeDown 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
