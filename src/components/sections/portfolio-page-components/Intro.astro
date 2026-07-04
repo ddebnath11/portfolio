@@ -17,7 +17,10 @@ const { pill, title, subtitle } = Astro.props
   <div class="animate-blur-in max-w-3xl w-full flex flex-col items-center text-center p-6 gap-6">
 
     <div class="flex flex-col items-center gap-3">
-      <div class="text-xs tracking-widest uppercase text-brand-secondary/60">{pill}</div>
+
+          <div class="h-[150px] w-[150px] flex flex-col lg:h-[180px] lg:w-[180px]">
+              <img src="/char-concerned.svg">
+          </div>
       
       <h1 class="text-3xl md:text-4xl lg:text-6xl text-brand-secondary font-primary tracking-[-0.03em] leading-tight font-bold">
         {title}

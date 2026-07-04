@@ -34,23 +34,14 @@
 
 }
 
-:root[data-theme="github"] {
+:root[data-theme="light"] {
   /* GITHUB */
-  --bg: #0d0e17;  
-  --secondary: #ffffff;
-  --secondary-encoded: %230a0a0a;
-  --color-brand-primary: #238636;
+  --bg: #d0d0e2;  
+  --secondary: #010113;
   --tertiary: #ffffff;
+  --color-brand-primary: #3b4caa;
 }
 
-:root[data-theme="skynet"] {
-  
-  --bg: #170d17;
-  --secondary: #ffffff;
-  --color-brand-primary: #5e2d7f;
-  --secondary-encoded: %2300ffcc;
-  --tertiary: #ffffff;
-}
 
 @theme {
   /* ANIMATION */
