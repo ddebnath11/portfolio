@@ -157,9 +157,9 @@
 
 /* Apply the animations to the page transition */
 ::view-transition-old(root) {
-  animation: 300ms ease-out both slide-out;
+  animation: 200ms ease-out both slide-out;
 }
 
 ::view-transition-new(root) {
-  animation: 300ms ease-out both slide-in;
+  animation: 200ms ease-out both slide-in;
 }

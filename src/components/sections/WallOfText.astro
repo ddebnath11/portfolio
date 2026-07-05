@@ -1,0 +1,77 @@
+---
+import ButtonFilled from "../buttons/ButtonFilled.astro";
+import ButtonOutline from "../buttons/ButtonOutline.astro"
+
+---
+<div class="p-5 lg:px-30">
+
+    <div class="w-full flex flex-col items-center justify-start text-center gap-6 md:gap-8  p-5">
+
+      <div class="w-full max-w-6xl mx-auto px-5 lg:px-30 pb-20">
+  <div class="group relative w-full border border-brand-secondary/10 bg-brand-bg/20 backdrop-blur-md rounded-2xl overflow-hidden flex flex-col lg:flex-row items-stretch transition-all duration-500 ease-out">
+    
+    <!-- LEFT SIDE: PROJECT BRIEF & DETAILS -->
+    <div class="flex-1 p-6 md:p-10 flex flex-col justify-between gap-8 z-10">
+      
+      <!-- Top Meta Tags -->
+      <div class="flex items-center gap-3">
+        <span class="text-[10px] font-secondary tracking-[0.15em] uppercase text-brand-primary border border-brand-primary/30 px-2.5 py-1 rounded-full bg-brand-primary/5">
+          Featured Project
+        </span>
+      </div>
+
+      <!-- Project Core Info -->
+      <div class="flex flex-col gap-3 text-left">
+        <h2 class="text-2xl md:text-3xl text-brand-secondary font-primary font-bold tracking-tight">
+          UMS Oman
+        </h2>
+        <p class="text-sm md:text-base text-brand-secondary/80 leading-relaxed max-w-md font-secondary font-light md:text-[16px] lg:text-[20px]">
+          Brand-new web platform for United Media Services LLC, Oman. Rebuilt from the ground up prioritizing layout structural integrity, lightweight assets, and instantaneous delivery.
+        </p>
+      </div>
+
+
+      <!-- Action Links -->
+      <div class="flex items-center gap-2 pt-2 lg:gap-4">
+
+        <ButtonFilled buttonAction="View Project"/>
+
+        <ButtonOutline buttonAction="Source Code"/>
+      </div>
+    </div>
+
+    <div class="flex-1 relative min-h-[300px] lg:min-h-full bg-brand-secondary/5 overflow-hidden border-t lg:border-t-0 lg:border-l border-brand-secondary/10 flex items-center justify-center p-6 md:p-8">
+  
+  <div class="absolute inset-0 grid grid-cols-3 grid-rows-3 pointer-events-none opacity-20">
+    <div class="border-b border-r border-brand-secondary/30"></div>
+    <div class="border-b border-r border-brand-secondary/30"></div>
+    <div class="border-b border-brand-secondary/30"></div>
+  </div>
+  
+  <div class="w-full max-w-[320px] lg:max-w-[360px] aspect-square rounded-xl overflow-hidden border border-brand-secondary/15 shadow-2xl transition-transform duration-700 ease-out group-hover:scale-[1.03] relative z-10">
+    
+    <img 
+      src="/projectCoverUMS.png" 
+      alt="UMS Oman Project Cover" 
+      class="w-full h-full object-cover"
+    />
+    
+  </div>
+</div>
+
+  </div>
+</div>
+
+      <h1 class="text-2xl md:text-3xl lg:text-4xl text-brand-secondary font-primary tracking-[-0.03em] leading-normal font-bold">
+        From Design to Code. 
+      </h1>
+
+
+
+
+    </div>
+
+
+
+
+</div>
