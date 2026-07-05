@@ -142,3 +142,24 @@
 }
 
 ::-webkit-scrollbar { display: none; }
+
+/* Global CSS or inside a <style is:global> tag */
+
+@keyframes slide-out {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(-30px); opacity: 0; }
+}
+
+@keyframes slide-in {
+  from { transform: translateX(30px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* Apply the animations to the page transition */
+::view-transition-old(root) {
+  animation: 300ms ease-out both slide-out;
+}
+
+::view-transition-new(root) {
+  animation: 300ms ease-out both slide-in;
+}

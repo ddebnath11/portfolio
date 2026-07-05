@@ -103,81 +103,97 @@ href="/"
 </div>
 
 <script>
-  // --- OVERLAY CODE ENGINE ---
-  const menuBtn = document.getElementById('custom-hamburger');
-  const overlay = document.getElementById('menu-overlay');
+  let inactivityTimeout: number;
+  const INACTIVITY_LIMIT = 10000; // 10 seconds
+  const activityEvents = ['mousemove', 'mousedown', 'touchstart', 'keydown', 'scroll'];
 
-  if (menuBtn && overlay) {
-    menuBtn.addEventListener('click', () => {
-      const isOpen = menuBtn.getAttribute('data-state') === 'open';
-      
-      if (!isOpen) {
-        menuBtn.setAttribute('data-state', 'open');
-        overlay.classList.remove('opacity-0', 'pointer-events-none');
-        overlay.classList.add('opacity-100', 'pointer-events-auto');
-        document.body.style.overflow = 'hidden';
-      } else {
-        menuBtn.setAttribute('data-state', 'closed');
-        overlay.classList.remove('opacity-100', 'pointer-events-auto');
-        overlay.classList.add('opacity-0', 'pointer-events-none');
-        document.body.style.overflow = '';
-      }
-    });
+  // --- CORE INITIALIZATION ENGINE ---
+  function initNavbar() {
+    const menuBtn = document.getElementById('custom-hamburger');
+    const overlay = document.getElementById('menu-overlay');
+    const navbar = document.getElementById('main-navbar');
+
+    if (!menuBtn || !overlay || !navbar) return;
+
+    // 1. Clean up any stale event listeners before adding new ones
+    menuBtn.removeEventListener('click', toggleMenu);
+    menuBtn.addEventListener('click', toggleMenu);
+
+    // 2. Setup/Reset the Scroll Inactivity Tracker
+    setupInactivityTracker(navbar, menuBtn);
   }
 
-  // --- NAVBAR INACTIVITY TRACKER (SCROLL INTERACTION) ---
-  function initNavInactivityTracker() {
-    const navbar = document.getElementById('main-navbar');
-    const hamburger = document.getElementById('custom-hamburger');
-    if (!navbar) return;
+  // --- OVERLAY CODE ENGINE ---
+  function toggleMenu(event: Event) {
+    const menuBtn = event.currentTarget as HTMLElement;
+    const overlay = document.getElementById('menu-overlay');
+    if (!menuBtn || !overlay) return;
 
-    let inactivityTimeout: number;
-    const INACTIVITY_LIMIT = 10000; // 10 SECONDS
+    const isOpen = menuBtn.getAttribute('data-state') === 'open';
+
+    if (!isOpen) {
+      menuBtn.setAttribute('data-state', 'open');
+      overlay.classList.remove('opacity-0', 'pointer-events-none');
+      overlay.classList.add('opacity-100', 'pointer-events-auto');
+      document.body.style.overflow = 'hidden';
+    } else {
+      closeMenu(menuBtn, overlay);
+    }
+  }
+
+  function closeMenu(menuBtn: HTMLElement, overlay: HTMLElement) {
+    menuBtn.setAttribute('data-state', 'closed');
+    overlay.classList.remove('opacity-100', 'pointer-events-auto');
+    overlay.classList.add('opacity-0', 'pointer-events-none');
+    document.body.style.overflow = '';
+  }
+
+  // --- NAVBAR INACTIVITY TRACKER ---
+  function setupInactivityTracker(navbar: HTMLElement, menuBtn: HTMLElement) {
+    // Reset global timer state
+    window.clearTimeout(inactivityTimeout);
 
     function hideNavbar() {
-      if (hamburger && hamburger.getAttribute('data-state') === 'open') {
+      // Never auto-hide the navbar if the overlay menu is actively open
+      if (menuBtn.getAttribute('data-state') === 'open') {
         resetTimer();
         return;
       }
-      navbar?.classList.add('-translate-y-full');
+      navbar.classList.add('-translate-y-full');
     }
 
     function showNavbar() {
-      navbar?.classList.remove('-translate-y-full');
+      navbar.classList.remove('-translate-y-full');
     }
 
-    // Explicit type checking fix for window tracking
     function resetTimer() {
       showNavbar();
       window.clearTimeout(inactivityTimeout);
       inactivityTimeout = window.setTimeout(hideNavbar, INACTIVITY_LIMIT);
     }
 
-    const activityEvents = ['mousemove', 'mousedown', 'touchstart', 'keydown', 'scroll'];
-
+    // Strip out active listeners from past pages to prevent cross-page duplication leaks
     activityEvents.forEach(event => {
+      window.removeEventListener(event, resetTimer);
       window.addEventListener(event, resetTimer, { passive: true });
     });
 
+    // Run immediately on page target layout resolution
     resetTimer();
-
-    return () => {
-      window.clearTimeout(inactivityTimeout);
-      activityEvents.forEach(event => {
-        window.removeEventListener(event, resetTimer);
-      });
-    };
   }
 
-  let cleanupTracker: (() => void) | undefined;
-  
-  document.addEventListener('DOMContentLoaded', () => {
-    cleanupTracker = initNavInactivityTracker();
+  // --- ASTRO SPA LIFECYCLE MANAGEMENT ---
+  // astro:page-load handles both the initial execution on raw HTTP hit
+  // AND fires cleanly after every single SPA View Transition swap.
+  document.addEventListener('astro:page-load', initNavbar);
+
+  // Close the overlay automatically if a user clicks an internal link
+  document.addEventListener('astro:before-swap', () => {
+    const menuBtn = document.getElementById('custom-hamburger');
+    const overlay = document.getElementById('menu-overlay');
+    if (menuBtn && overlay && menuBtn.getAttribute('data-state') === 'open') {
+      closeMenu(menuBtn, overlay);
+    }
+    window.clearTimeout(inactivityTimeout);
   });
-  
-  document.addEventListener('astro:after-swap', () => {
-    if (cleanupTracker) cleanupTracker();
-    cleanupTracker = initNavInactivityTracker();
-  });
-  
 </script>
