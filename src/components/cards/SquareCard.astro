@@ -1,0 +1,56 @@
+---
+import ButtonFilled from '../buttons/ButtonFilled.astro';
+import ButtonOutline from '../buttons/ButtonOutline.astro';
+
+interface Props {
+  pillarNum: string,
+  pillarTitle: string,
+  pillarDescription: string;
+  logos?: string[];
+}
+
+const { pillarNum, pillarTitle, pillarDescription , logos = []} = Astro.props;
+
+---
+<div class="aspect-square bg-brand-bg/10 backdrop-blur-sm p-6 md:p-8 flex flex-col gap-6 items-start text-left rounded-none transition-all duration-300 justify-between">
+
+  
+
+          <span class="text-[10px] font-mono tracking-[0.15em] text-brand-secondary/40 uppercase">
+            PILLAR {pillarNum}
+          </span>
+          
+          <div class="flex flex-row gap-4">
+
+              {logos.length > 0 && (
+                    <div class="flex flex-row gap-3">
+                      {logos.map((logoSrc) => (
+                        <div class="h-14 w-14 border border-brand-secondary/20 rounded-none flex items-center justify-center p-3 lg:h-20 lg:w-20">
+                          <img 
+                            src={logoSrc} 
+                            alt="Technology Logo" 
+                            class="w-full h-full object-contain" 
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <h2 class="text-xl lg:text-2xl font-accent font-bold tracking-tight text-brand-secondary group-hover:text-brand-primary transition-colors duration-300">
+              {pillarTitle}
+            </h2>
+            <p class="text-sm text-brand-secondary/50 font-secondary font-light leading-relaxed md:text-[16px] lg:text-[16px]">
+              {pillarDescription}
+            </p>
+          </div>
+
+        
+
+
+          <div class="flex">
+            <ButtonOutline buttonAction='Read More'/>
+          </div>
+</div>

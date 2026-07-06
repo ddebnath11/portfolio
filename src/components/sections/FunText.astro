@@ -1,60 +1,48 @@
 ---
+import CTA from "../buttons/CTA.astro";
+import SquareCard from "../cards/SquareCard.astro";
 ---
-<div class="text-center p-5  border-t border-brand-secondary/20 flex flex-col gap-4">
+<div class="text-center p-6  border-t border-brand-secondary/20 flex flex-col gap-6 lg:py-15">
 <h1 class="text-2xl md:text-3xl lg:text-4xl font-primary text-brand-secondary tracking-[-0.03em] leading-normal font-bold lg:px-60 reveal-on-scroll">
-    Right now, I'm learning how small bits work together to build a system — both Design and Development
+    Right now, I'm learning how small bits work together to build a system — both <span class="text-brand-primary"> Design and Development</span>
 </h1>
 
-<div class="w-full lg:px-30">
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<p class="font-secondary text-sm text-brand-secondary/80 md:text-sm animate-reveal-up md:text-[16px] lg:text-[20px]">
+
+    Here are the 3 pillars that define what I do.
+      
+</p>
+
+<div class="w-full lg:px-30 lg:py-10">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-0 border border-brand-secondary/20 bg-brand-bg/10 rounded-xl overflow-hidden shadow-sm shadow-brand-secondary/5">
     
-    <div class="aspect-square border border-brand-secondary/10 bg-brand-bg/10 backdrop-blur-sm p-6 md:p-8 flex flex-col justify-between items-start text-left rounded-xl transition-all duration-300 hover:border-brand-secondary/20 group">
-      <span class="text-[10px] font-mono tracking-[0.15em] text-brand-secondary/40 uppercase">
-        [ foundations // 01 ]
-      </span>
-      
-      <div class="flex flex-col gap-2">
-        <h2 class="text-xl lg:text-2xl font-accent font-bold tracking-tight text-brand-secondary group-hover:text-brand-primary transition-colors duration-300">
-          Low-Level Systems
-        </h2>
-        <p class="text-xs text-brand-secondary/50 font-secondary font-light leading-relaxed">
-          Deconstructing memory structures, pointer mechanics, and fundamental data paradigms in C.
-        </p>
-      </div>
+    <div class="border-b md:border-b-0 md:border-r border-brand-secondary/20 -mr-px -mb-px">
+      <SquareCard 
+         pillarNum="1" 
+         pillarTitle="Logic and Problem Solving" 
+         pillarDescription="These are the tools I use to practise logic, reasoning and problem solving skills." 
+         logos={['/c-logo.webp', '/python-logo.webp', '/js-logo.png']}/>
     </div>
 
-    <div class="aspect-square border border-brand-secondary/10 bg-brand-bg/10 backdrop-blur-sm p-6 md:p-8 flex flex-col justify-between items-start text-left rounded-xl transition-all duration-300 hover:border-brand-secondary/20 group">
-      <span class="text-[10px] font-mono tracking-[0.15em] text-brand-secondary/40 uppercase">
-        [ architecture // 02 ]
-      </span>
-      
-      <div class="flex flex-col gap-2">
-        <h2 class="text-xl lg:text-2xl font-accent font-bold tracking-tight text-brand-secondary group-hover:text-brand-primary transition-colors duration-300">
-          Component Models
-        </h2>
-        <p class="text-xs text-brand-secondary/50 font-secondary font-light leading-relaxed">
-          Analyzing state flow, shadow DOM rendering pipelines, and modular UI patterns in React.
-        </p>
-      </div>
+    <div class="border-b md:border-b-0 md:border-r border-brand-secondary/20 -mr-px -mb-px">
+      <SquareCard pillarNum="2" pillarTitle="Web Design and Development" pillarDescription="Tools I use to build for the web, both frontend and backend. " />
     </div>
 
-    <div class="aspect-square border border-brand-secondary/10 bg-brand-bg/10 backdrop-blur-sm p-6 md:p-8 flex flex-col justify-between items-start text-left rounded-xl transition-all duration-300 hover:border-brand-secondary/20 group">
-      <span class="text-[10px] font-mono tracking-[0.15em] text-brand-secondary/40 uppercase">
-        [ visual-logic // 03 ]
-      </span>
-      
-      <div class="flex flex-col gap-2">
-        <h2 class="text-xl lg:text-2xl font-accent font-bold tracking-tight text-brand-secondary group-hover:text-brand-primary transition-colors duration-300">
-          Interface Interface Anatomy
-        </h2>
-        <p class="text-xs text-brand-secondary/50 font-secondary font-light leading-relaxed">
-          Bridging layout geometry, custom typography hierarchies, and hardware-accelerated animations.
-        </p>
-      </div>
+    <div class="-mr-px -mb-px">
+      <SquareCard pillarNum="3" pillarTitle="Visual Identity and Narrative" pillarDescription="UI/UX, Storytelling, Film, Music" />
     </div>
+
+    
 
   </div>
+
+
+
+
 </div>
 
+<div class="items-center ">
 
+  <CTA buttonAction="View All Projects" url="/projects"/>
+</div>
 </div>
