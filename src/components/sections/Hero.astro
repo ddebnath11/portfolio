@@ -4,6 +4,7 @@ import downArrow from '../../assets/downarrow.svg'
 import CTA from '../buttons/CTA.astro';
 import dDImg from '/dDimg.webp'
 import CTAoutline from '../buttons/CTAoutline.astro';
+import CharHappy from '../character/CharHappy.astro';
 ---
 <div class="p-5 lg:px-30">
   <div class="w-full flex flex-col items-center justify-start text-center gap-6 md:gap-8 pt-28 md:pt-24 pb-12">
@@ -16,10 +17,14 @@ import CTAoutline from '../buttons/CTAoutline.astro';
       >
         --:-- IST
       </div>
+       
+      <div class="h-[150px] w-[150px] flex flex-col lg:h-[180px] lg:w-[180px]">
 
-            <div class="h-[150px] w-[150px] flex flex-col lg:h-[180px] lg:w-[180px]">
-              <img src="/char-happy.svg">
-            </div>
+            <CharHappy />
+
+
+      </div>
+
       </div>
 
       <h1 class="text-4xl md:text-6xl lg:text-6xl text-brand-secondary font-primary tracking-[-0.03em] leading-normal font-bold">

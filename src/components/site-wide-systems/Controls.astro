@@ -75,8 +75,8 @@
 <style>
   :root:not([data-theme]) button[data-theme-set="dark"],
   :root[data-theme="dark"] button[data-theme-set="dark"],
-  :root[data-theme="github"] button[data-theme-set="github"],
-  :root[data-theme="skynet"] button[data-theme-set="skynet"] {
+  :root[data-theme="orange"] button[data-theme-set="orange"],
+  :root[data-theme="github"] button[data-theme-set="github"] {
     background-color: var(--color-brand-primary);
     border-color: var(--color-brand-primary);
   }
@@ -115,7 +115,7 @@
 <script>
   function initThemeSwitcher() {
     
-    const themes = ['dark', 'light'];
+    const themes = ['dark', 'orange', 'github'];
     
     
     const savedTheme = localStorage.getItem('portfolio-theme') || 'dark';

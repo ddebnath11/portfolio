@@ -34,17 +34,16 @@
 
 }
 
-:root[data-theme="light"] {
-  /* GITHUB */
-  --bg: #d0d0e2;  
-  --secondary: #010113;
-  --tertiary: #ffffff;
-  --color-brand-primary: #3b4caa;
+:root[data-theme="orange"] {
+  --color-brand-primary: #E2531F;
+}
+
+:root[data-theme="github"] {
+  --color-brand-primary: #239d3b;
 }
 
 
 @theme {
-  /* ANIMATION */
   --animate-fluid-float: bounce 2.5s cubic-bezier(0.45, 0, 0.55, 1) infinite;
   --animate-fade-in: customFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   --animate-fade-up: customFadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;

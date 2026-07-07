@@ -2,6 +2,7 @@
 import CTA from "../../buttons/CTA.astro";
 import CTAoutline from "../../buttons/CTAoutline.astro";
 import ButtonFilled from "../../buttons/ButtonFilled.astro"
+import CharHappy from "../../character/CharHappy.astro";
 
 interface Props {
   pill?: string
@@ -18,9 +19,7 @@ const { pill, title, subtitle } = Astro.props
 
     <div class="flex flex-col items-center gap-3">
 
-          <div class="h-[150px] w-[150px] flex flex-col lg:h-[180px] lg:w-[180px]">
-              <img src="/char-concerned.svg">
-          </div>
+      
       
       <h1 class="text-3xl md:text-4xl lg:text-6xl text-brand-secondary font-primary tracking-[-0.03em] leading-tight font-bold">
         {title}
