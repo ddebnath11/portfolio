@@ -1,0 +1,124 @@
+---
+import Intro from '../components/sections/Intro.astro';
+import Layout from '../layouts/Layout.astro';
+
+// Mock Data Structure for your writing
+const posts = [
+  {
+    title: "Deconstructing the Shadow DOM: Why Framework Complexity Fails",
+    description: "An analysis of rendering lifecycles, memory boundaries, and why vanilla primitives often out-perform bulky component abstraction layers.",
+    date: "JUL 02, 2026",
+    readTime: "5 MIN READ",
+    category: "engineering",
+    slug: "deconstructing-shadow-dom",
+    featured: true
+  },
+  {
+    title: "The Architecture of Surrealism in Psychological Horror Cinema",
+    description: "Breaking down how physical spatial limitations and layout geometry in sets manipulate psychological tension, referencing 13B and industrial sets.",
+    date: "JUN 18, 2026",
+    readTime: "8 MIN READ",
+    category: "cinema",
+    slug: "architecture-of-surrealism-horror"
+  },
+  {
+    title: "Machine: Character Study & Script Logic",
+    description: "The complete screenwriting treatment, character logic nodes, and dark monologue scripting for Jack in the short film project Machine.",
+    date: "JUN 05, 2026",
+    readTime: "4 MIN READ",
+    category: "scripts",
+    slug: "machine-script-logic"
+  },
+  {
+    title: "Designing with Math: Implementing Clean CSS Scroll Timelines",
+    description: "A practical guide to hardware-accelerated animations using native view() timelines without loading massive external JavaScript libraries.",
+    date: "MAY 24, 2026",
+    readTime: "6 MIN READ",
+    category: "ui-ux",
+    slug: "css-scroll-timelines-guide"
+  }
+];
+
+const featuredPost = posts.find(p => p.featured);
+const archivePosts = posts.filter(p => !p.featured);
+---
+
+<Layout title="Diptangshu" subtitle="Writing & Essays" pill="blog">
+  <main class="w-full max-w-6xl mx-auto px-5 lg:px-30 pb-24">
+    
+    <Intro   
+       title="My"
+       titleSpan='Blog'
+       subtitle="Here's where I post my thoughts."
+
+
+
+    
+    
+    />
+
+
+    {featuredPost && (
+      <a 
+        href={`/blog/${featuredPost.slug}/`}
+        class="group w-full border-b border-brand-secondary/10 py-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 transition-all duration-300 hover:bg-brand-secondary/[0.01]"
+      >
+        <div class="flex flex-col gap-3 max-w-2xl">
+          <div class="flex items-center gap-3 text-[10px] font-mono text-brand-primary">
+            <span>[ FEATURED ESSAY ]</span>
+            <span class="text-brand-secondary/30">•</span>
+            <span class="lowercase">#{featuredPost.category}</span>
+          </div>
+          <h2 class="text-2xl md:text-3xl font-accent font-bold tracking-tight text-brand-secondary group-hover:text-brand-primary transition-colors duration-300">
+            {featuredPost.title}
+          </h2>
+          <p class="text-sm text-brand-secondary/50 font-secondary font-light leading-relaxed">
+            {featuredPost.description}
+          </p>
+        </div>
+        
+        <div class="flex flex-row md:flex-col items-baseline md:items-end gap-2 text-right font-mono text-xs text-brand-secondary/40 whitespace-nowrap">
+          <span>{featuredPost.date}</span>
+          <span class="hidden md:inline text-brand-secondary/20">|</span>
+          <span>{featuredPost.readTime}</span>
+        </div>
+      </a>
+    )}
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-b border-brand-secondary/10">
+      {archivePosts.map((post, index) => (
+        <a 
+          href={`/blog/${post.slug}/`}
+          class={`group p-8 flex flex-col justify-between gap-8 border-brand-secondary/10 transition-all duration-300 hover:bg-brand-secondary/[0.01] -mr-px
+            ${index % 2 === 0 ? 'border-b md:border-r' : 'border-b'}
+          `}
+        >
+          <div class="flex items-center justify-between font-mono text-[10px] text-brand-secondary/40">
+            <span class="lowercase bg-brand-secondary/5 px-2 py-0.5 border border-brand-secondary/10 rounded">
+              #{post.category}
+            </span>
+            <div class="flex gap-2">
+              <span>{post.date}</span>
+              <span>•</span>
+              <span>{post.readTime}</span>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <h3 class="text-xl font-accent font-bold tracking-tight text-brand-secondary group-hover:text-brand-primary transition-colors duration-300">
+              {post.title}
+            </h3>
+            <p class="text-xs lg:text-sm text-brand-secondary/50 font-secondary font-light leading-relaxed">
+              {post.description}
+            </p>
+          </div>
+
+          <div class="text-xs font-mono text-brand-secondary/30 group-hover:text-brand-primary group-hover:translate-x-1 transition-all duration-300">
+            Read Entry ↗
+          </div>
+        </a>
+      ))}
+    </div>
+
+  </main>
+</Layout>

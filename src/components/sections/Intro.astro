@@ -1,28 +1,32 @@
 ---
-import CTA from "../../buttons/CTA.astro";
-import CTAoutline from "../../buttons/CTAoutline.astro";
-import ButtonFilled from "../../buttons/ButtonFilled.astro"
-import CharHappy from "../../character/CharHappy.astro";
+import CTA from "../buttons/CTA.astro";
+import CTAoutline from "../buttons/CTAoutline.astro";
+import ButtonFilled from "../buttons/ButtonFilled.astro"
+import CharHappy from "../character/CharHappy.astro";
 
 interface Props {
   pill?: string
   title: string
+  titleSpan?:string
   subtitle: string
 }
 
-const { pill, title, subtitle } = Astro.props
+const { pill, title,titleSpan, subtitle } = Astro.props
 ---
+<div class="p-5 pt-20 flex flex-col items-center">
 
 <div class="lg:px-30">
     <div class="w-full py-12 flex flex-col items-center justify-center border-none border-brand-secondary/10 px-4">
   <div class="animate-blur-in max-w-3xl w-full flex flex-col items-center text-center p-6 gap-6">
 
     <div class="flex flex-col items-center gap-3">
-
-      
       
       <h1 class="text-3xl md:text-4xl lg:text-6xl text-brand-secondary font-primary tracking-[-0.03em] leading-tight font-bold">
-        {title}
+        {title}<span class="text-brand-primary"> {titleSpan}</span>
+
+
+
+
       </h1>
 
       <p class="font-secondary text-sm text-brand-secondary/90 md:text-base lg:text-[20px] max-w-2xl leading-relaxed lg:leading-loose">
@@ -44,6 +48,8 @@ const { pill, title, subtitle } = Astro.props
 
 
     </div>
+</div>
+
 </div>
 
 

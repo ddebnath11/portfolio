@@ -1,21 +1,21 @@
 ---
 import CTA from "../components/buttons/CTA.astro";
-import Intro from "../components/sections/portfolio-page-components/Intro.astro";
+import CTAoutline from "../components/buttons/CTAoutline.astro";
+import Intro from "../components/sections/Intro.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 <Layout title="Page Not Found!" subtitle="Try Again" pill="the void">
 
-  <div class="p-5 pt-20 flex flex-col items-center">
 
- 
+<div class="flex flex-col items-center"> 
   <Intro 
       pill="404 ERROR" 
       title="This page doesn't exist." 
       subtitle="404! This page is either under construction or never existed in the first place. Check that link again."
   />
 
-  <CTA buttonAction="Back to Home" url="/"></CTA>
+  <CTA buttonAction="Home" url="/" />
  
+</div>
 
-  </div>
 </Layout>
