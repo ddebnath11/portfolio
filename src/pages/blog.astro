@@ -3,46 +3,49 @@ import ButtonFilled from '../components/buttons/ButtonFilled.astro';
 import ButtonOutline from '../components/buttons/ButtonOutline.astro';
 import Layout from '../layouts/Layout.astro';
 
-const posts = [
-  {
-    title: "Deconstructing the Shadow DOM: Why Framework Complexity Fails",
-    description: "An analysis of rendering lifecycles, memory boundaries, and why vanilla primitives often out-perform bulky component abstraction layers.",
-    date: "JUL 02, 2026",
-    readTime: "5 MIN READ",
-    category: "engineering",
-    slug: "deconstructing-shadow-dom",
-    featured: true
-  },
-  {
-    title: "The Architecture of Surrealism in Psychological Horror Cinema",
-    description: "Breaking down how physical spatial limitations and layout geometry in sets manipulate psychological tension, referencing 13B and industrial sets.",
-    date: "JUN 18, 2026",
-    readTime: "8 MIN READ",
-    category: "cinema",
-    slug: "architecture-of-surrealism-horror"
-  },
-  {
-    title: "Machine: Character Study & Script Logic",
-    description: "The complete screenwriting treatment, character logic nodes, and dark monologue scripting for Jack in the short film project Machine.",
-    date: "JUN 05, 2026",
-    readTime: "4 MIN READ",
-    category: "scripts",
-    slug: "machine-script-logic"
-  },
-  {
-    title: "Designing with Math: Implementing Clean CSS Scroll Timelines",
-    description: "A practical guide to hardware-accelerated animations using native view() timelines without loading massive external JavaScript libraries.",
-    date: "MAY 24, 2026",
-    readTime: "6 MIN READ",
-    category: "ui-ux",
-    slug: "css-scroll-timelines-guide"
-  }
-];
+import { fetchFromStrapi } from '../lib/strapi';
 
-const featuredPost = posts.find(p => p.featured);
-const archivePosts = posts.filter(p => !p.featured);
+interface Post {
+  id: number;
+  documentId: string; // Strapi v5 identifier
+  title: string;
+  slug: string;
+  description: string;
+  category: string;
+  date: string;         // Datetime comes over as an ISO string
+  postcontent: any[];   // Rich text (Blocks) is an array of JSON node objects
+  featured: boolean;
+}
 
-const categories = ["all", ...new Set(posts.map(p => p.category))];
+// 1. Fetch posts from Strapi
+const posts = await fetchFromStrapi<Post[]>({ endpoint: 'posts' }) || [];
+
+// 2. Format dates, add a dynamic reading time estimation fallback, and sort by newest date
+const formattedPosts = posts.map(post => {
+  // Rough reading time calculation based on character count estimation
+  const characterCount = JSON.stringify(post.postcontent || '').length;
+  const words = Math.max(1, Math.floor(characterCount / 6)); 
+  const readTimeMin = Math.max(1, Math.ceil(words / 200));
+
+  return {
+    ...post,
+    date: new Date(post.date).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    }),
+    readTime: `${readTimeMin} min read`
+  };
+}).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+// 3. Extract featured post and separate archive lists
+const featuredPost = formattedPosts.find(post => post.featured) || formattedPosts[0];
+const archivePosts = featuredPost 
+  ? formattedPosts.filter(post => post.documentId !== featuredPost.documentId)
+  : formattedPosts;
+
+// 4. Generate unique dynamic category lists for navigation filters
+const categories = ['all', ...new Set(formattedPosts.map(post => post.category).filter(Boolean))];
 ---
 
 <Layout title="Diptangshu Debnath" subtitle="Blogs" pill="blog">
@@ -125,7 +128,7 @@ const categories = ["all", ...new Set(posts.map(p => p.category))];
             data-post-title={post.title.toLowerCase()}
             data-post-desc={post.description.toLowerCase()}
             data-post-category={post.category}
-            class={`group py-8 px-2 flex flex-col justify-between gap-8 border-brand-secondary/10 transition-all duration-300 hover:bg-brand-secondary/[0.01] -mr-px
+            class={`blog-post-card group py-8 px-2 flex flex-col justify-between gap-8 border-brand-secondary/10 transition-all duration-300 hover:bg-brand-secondary/[0.01] -mr-px
               ${index % 2 === 0 ? 'border-b bg-brand-primary/[0.01]' : 'border-b'} last:border-b-0
             `}
           >
@@ -175,7 +178,12 @@ const categories = ["all", ...new Set(posts.map(p => p.category))];
         const matchesCategory = currentCategory === "all" || category === currentCategory;
 
         if (matchesSearch && matchesCategory) {
-          (card as HTMLElement).style.display = "flex";
+          // If the element is an archive grid item vs a main layout row card, handle fallback alignment cleanly
+          if (card.classList.contains('grid')) {
+             (card as HTMLElement).style.display = "grid";
+          } else {
+             (card as HTMLElement).style.display = "flex";
+          }
         } else {
           (card as HTMLElement).style.display = "none";
         }
