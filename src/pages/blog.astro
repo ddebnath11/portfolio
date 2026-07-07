@@ -1,8 +1,8 @@
 ---
-import Intro from '../components/sections/Intro.astro';
+import ButtonFilled from '../components/buttons/ButtonFilled.astro';
+import ButtonOutline from '../components/buttons/ButtonOutline.astro';
 import Layout from '../layouts/Layout.astro';
 
-// Mock Data Structure for your writing
 const posts = [
   {
     title: "Deconstructing the Shadow DOM: Why Framework Complexity Fails",
@@ -41,84 +41,166 @@ const posts = [
 
 const featuredPost = posts.find(p => p.featured);
 const archivePosts = posts.filter(p => !p.featured);
+
+const categories = ["all", ...new Set(posts.map(p => p.category))];
 ---
 
-<Layout title="Diptangshu" subtitle="Writing & Essays" pill="blog">
-  <main class="w-full max-w-6xl mx-auto px-5 lg:px-30 pb-24">
+<Layout title="Diptangshu Debnath" subtitle="Blogs" pill="blog">
+  <main class="w-full max-w-7xl mx-auto px-5 lg:px-30 pb-24 pt-32">
     
-    <Intro   
-       title="My"
-       titleSpan='Blog'
-       subtitle="Here's where I post my thoughts."
+    <div class="flex flex-col gap-4 pb-8 border-b border-brand-secondary/10 lg:gap-6 items-center text-center">
+      <h1 class="text-4xl md:text-5xl font-accent font-bold tracking-tight text-brand-secondary">
+        My Blog
+      </h1>
+      <p class="text-sm md:text-base text-brand-secondary/80 font-secondary font-light max-w-xl leading-relaxed md:text-[16px] lg:text-[20px]">
+        This is where you'll find my thoughts and the lessons I learnt. 
+      </p>
+       
+      <div class="flex flex-row gap-2 items-left lg:gap-4">
+        <ButtonFilled buttonAction='Subscribe' />
+        <ButtonOutline buttonAction='Visit Notebook' />
+      </div>
+    </div>
 
+    <div class="w-full py-8 border-b border-brand-secondary/10 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-6">
+      
+      <div class="relative w-full md:max-w-xs">
+        <input 
+          type="text" 
+          id="blog-search" 
+          placeholder="search entries..." 
+          class="w-full bg-brand-secondary/5 border border-brand-secondary/20 rounded-lg px-4 py-2 text-sm font-secondary font-light text-brand-secondary placeholder-brand-secondary/40 focus:outline-none focus:border-brand-primary transition-colors duration-300"
+        />
+      </div>
 
+      <div class="flex flex-wrap items-center gap-2" id="filter-pill-container">
+        {categories.map((category) => (
+          <button
+            data-category={category}
+            class="filter-btn px-3 py-1 text-xs font-mono uppercase tracking-wider rounded-md border transition-all duration-300 bg-brand-secondary/5 border-brand-secondary/10 text-brand-secondary/60 data-[active=true]:border-brand-primary data-[active=true]:text-brand-primary"
+            data-active={category === "all" ? "true" : "false"}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
+    </div>
 
-    
-    
-    />
-
-
-    {featuredPost && (
-      <a 
-        href={`/blog/${featuredPost.slug}/`}
-        class="group w-full border-b border-brand-secondary/10 py-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 transition-all duration-300 hover:bg-brand-secondary/[0.01]"
-      >
-        <div class="flex flex-col gap-3 max-w-2xl">
-          <div class="flex items-center gap-3 text-[10px] font-mono text-brand-primary">
-            <span>[ FEATURED ESSAY ]</span>
-            <span class="text-brand-secondary/30">•</span>
-            <span class="lowercase">#{featuredPost.category}</span>
-          </div>
-          <h2 class="text-2xl md:text-3xl font-accent font-bold tracking-tight text-brand-secondary group-hover:text-brand-primary transition-colors duration-300">
-            {featuredPost.title}
-          </h2>
-          <p class="text-sm text-brand-secondary/50 font-secondary font-light leading-relaxed">
-            {featuredPost.description}
-          </p>
-        </div>
-        
-        <div class="flex flex-row md:flex-col items-baseline md:items-end gap-2 text-right font-mono text-xs text-brand-secondary/40 whitespace-nowrap">
-          <span>{featuredPost.date}</span>
-          <span class="hidden md:inline text-brand-secondary/20">|</span>
-          <span>{featuredPost.readTime}</span>
-        </div>
-      </a>
-    )}
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-b border-brand-secondary/10">
-      {archivePosts.map((post, index) => (
+    <div id="blog-posts-container" class="w-full">
+      
+      {featuredPost && (
         <a 
-          href={`/blog/${post.slug}/`}
-          class={`group p-8 flex flex-col justify-between gap-8 border-brand-secondary/10 transition-all duration-300 hover:bg-brand-secondary/[0.01] -mr-px
-            ${index % 2 === 0 ? 'border-b md:border-r' : 'border-b'}
-          `}
+          href={`/blog/${featuredPost.slug}/`}
+          data-post-title={featuredPost.title.toLowerCase()}
+          data-post-desc={featuredPost.description.toLowerCase()}
+          data-post-category={featuredPost.category}
+          class="blog-post-card group w-full border-b border-brand-secondary/10 py-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 transition-all duration-300 hover:bg-brand-secondary/[0.01]"
         >
-          <div class="flex items-center justify-between font-mono text-[10px] text-brand-secondary/40">
-            <span class="lowercase bg-brand-secondary/5 px-2 py-0.5 border border-brand-secondary/10 rounded">
-              #{post.category}
-            </span>
-            <div class="flex gap-2">
-              <span>{post.date}</span>
-              <span>•</span>
-              <span>{post.readTime}</span>
+          <div class="flex flex-col gap-3 max-w-2xl">
+            <div class="flex items-center gap-3 text-[10px] tracking-wider text-brand-primary">
+              <span class="p-2 border-b border-brand-primary text-left">FEATURED ESSAY</span>
+              <span class="text-brand-secondary/30">•</span>
+              <span class="lowercase font-mono">{featuredPost.category}</span>
             </div>
-          </div>
-
-          <div class="flex flex-col gap-2">
-            <h3 class="text-xl font-accent font-bold tracking-tight text-brand-secondary group-hover:text-brand-primary transition-colors duration-300">
-              {post.title}
-            </h3>
-            <p class="text-xs lg:text-sm text-brand-secondary/50 font-secondary font-light leading-relaxed">
-              {post.description}
+            <h2 class="text-2xl md:text-3xl font-accent font-bold tracking-tight text-brand-secondary group-hover:text-brand-primary transition-colors duration-300 lg:text-[40px]">
+              {featuredPost.title}
+            </h2>
+            <p class="text-sm text-brand-secondary/80 font-secondary font-light leading-relaxed lg:text-[18px]">
+              {featuredPost.description}
             </p>
           </div>
-
-          <div class="text-xs font-mono text-brand-secondary/30 group-hover:text-brand-primary group-hover:translate-x-1 transition-all duration-300">
-            Read Entry ↗
+          
+          <div class="flex flex-row md:flex-col items-baseline md:items-end gap-2 text-right font-mono text-xs text-brand-secondary/40 whitespace-nowrap">
+            <span>{featuredPost.date}</span>
+            <span class="hidden md:inline text-brand-secondary/20">|</span>
+            <span>{featuredPost.readTime}</span>
           </div>
         </a>
-      ))}
+      )}
+
+      <div class="grid grid-cols-1 gap-0 border-b border-brand-secondary/10">
+        {archivePosts.map((post, index) => (
+          <a 
+            href={`/blog/${post.slug}/`}
+            data-post-title={post.title.toLowerCase()}
+            data-post-desc={post.description.toLowerCase()}
+            data-post-category={post.category}
+            class={`group py-8 px-2 flex flex-col justify-between gap-8 border-brand-secondary/10 transition-all duration-300 hover:bg-brand-secondary/[0.01] -mr-px
+              ${index % 2 === 0 ? 'border-b bg-brand-primary/[0.01]' : 'border-b'} last:border-b-0
+            `}
+          >
+            <div class="flex items-center justify-between text-[10px] text-brand-secondary/40">
+              <span class="uppercase font-mono bg-brand-secondary/5 px-2 py-0.5 border border-brand-secondary/10 rounded">
+                {post.category}
+              </span>
+              <div class="flex gap-2">
+                <span>{post.date}</span>
+                <span>•</span>
+                <span>{post.readTime}</span>
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <h3 class="text-2xl font-accent font-bold tracking-tight text-brand-secondary group-hover:text-brand-primary transition-colors duration-300 lg:text-[30px]">
+                {post.title}
+              </h3>
+              <p class="text-sm lg:text-[18px] text-brand-secondary/80 font-secondary font-light leading-relaxed">
+                {post.description}
+              </p>
+            </div>
+          </a>
+        ))}
+      </div>
     </div>
 
   </main>
 </Layout>
+
+<script>
+  function setupSearchAndFilters() {
+    const searchInput = document.getElementById('blog-search') as HTMLInputElement;
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const postCards = document.querySelectorAll('.blog-post-card');
+
+    let currentSearchTerm = "";
+    let currentCategory = "all";
+
+    function filterPosts() {
+      postCards.forEach((card) => {
+        const title = card.getAttribute('data-post-title') || "";
+        const desc = card.getAttribute('data-post-desc') || "";
+        const category = card.getAttribute('data-post-category') || "";
+
+        const matchesSearch = title.includes(currentSearchTerm) || desc.includes(currentSearchTerm);
+        const matchesCategory = currentCategory === "all" || category === currentCategory;
+
+        if (matchesSearch && matchesCategory) {
+          (card as HTMLElement).style.display = "flex";
+        } else {
+          (card as HTMLElement).style.display = "none";
+        }
+      });
+    }
+
+    // Input word listener
+    searchInput?.addEventListener('input', (e) => {
+      currentSearchTerm = (e.target as HTMLInputElement).value.toLowerCase();
+      filterPosts();
+    });
+
+    // Tag toggle click listener
+    filterButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach(b => b.setAttribute('data-active', 'false'));
+        btn.setAttribute('data-active', 'true');
+        
+        currentCategory = btn.getAttribute('data-category') || "all";
+        filterPosts();
+      });
+    });
+  }
+
+  // Runs on initial view mount and matches Astro ViewTransition navigation updates
+  setupSearchAndFilters();
+  document.addEventListener('astro:after-swap', setupSearchAndFilters);
+</script>
