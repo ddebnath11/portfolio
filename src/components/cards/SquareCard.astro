@@ -29,7 +29,8 @@ const { pillarNum, pillarTitle, pillarDescription , logos = []} = Astro.props;
                           <img 
                             src={logoSrc} 
                             alt="Technology Logo" 
-                            class="w-full h-full object-contain" 
+                            class="w-full h-full object-contain"
+                            loading="eager" 
                           />
                         </div>
                       ))}
