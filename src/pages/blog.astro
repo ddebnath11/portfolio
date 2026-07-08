@@ -7,13 +7,13 @@ import { fetchFromStrapi } from '../lib/strapi';
 
 interface Post {
   id: number;
-  documentId: string; // Strapi v5 identifier
+  documentId: string; 
   title: string;
   slug: string;
   description: string;
   category: string;
-  date: string;         // Datetime comes over as an ISO string
-  postcontent: any[];   // Rich text (Blocks) is an array of JSON node objects
+  date: string;         
+  postcontent: any[];   
   featured: boolean;
 }
 

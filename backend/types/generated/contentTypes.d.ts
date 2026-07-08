@@ -500,6 +500,9 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::post.post'> &
       Schema.Attribute.Private;
     postcontent: Schema.Attribute.Blocks;
+    postcoverimg: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.String;
     title: Schema.Attribute.String;

@@ -1,0 +1,223 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { Code } from 'astro:components';
+import { fetchFromStrapi } from '../../lib/strapi';
+import ButtonFilled from '../../components/buttons/ButtonFilled.astro';
+
+// 1. Define the TypeScript interface to match your post structure
+interface Post {
+  id: number;
+  documentId: string;
+  title: string;
+  slug: string;
+  description: string;
+  category: string;
+  date: string;
+  postcontent: any[]; // The Strapi Rich Text JSON array
+}
+
+// 2. Generate the static paths for every post at build time
+export async function getStaticPaths() {
+  const posts = await fetchFromStrapi<Post[]>({ endpoint: 'posts' }) || [];
+  
+  return posts.map((post) => ({
+    params: { slug: post.slug }, // This maps directly to the [slug] filename
+    props: { post },             // Passes the full post data down to the component
+  }));
+}
+
+// 3. Grab the post data passed down from getStaticPaths
+const { post } = Astro.props;
+
+// 4. Clean up the date string formatting
+const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+<Layout title={post.title} subtitle={post.category} pill="blog">
+  <article class="w-full max-w-3xl mx-auto px-5 pb-24 pt-32 font-secondary">
+    
+    <header class="flex flex-col gap-4 pb-8 border-b border-brand-secondary/10 mb-8">
+      <div class="flex items-center gap-2 text-sm font-primary uppercase tracking-wider text-brand-primary">
+        <span>{post.category}</span>
+        <span class="text-brand-secondary/20">•</span>
+        <time datetime={post.date}>{formattedDate}</time>
+      </div>
+      
+      <h1 class="text-3xl md:text-5xl font-accent font-bold tracking-tight text-brand-secondary leading-tight">
+        {post.title}
+      </h1>
+      
+      <p class="text-base md:text-lg text-brand-secondary/60 font-light italic leading-relaxed">
+        {post.description}
+      </p>
+    </header>
+
+    <div class="prose max-w-none flex flex-col gap-6 text-brand-secondary/90 text-sm md:text-base leading-relaxed">
+      {post.postcontent?.map((block: any) => {
+        
+        if (block.type === 'paragraph') {
+          return (
+            <p class="font-blog text-[16px] lg:text-[18px]">
+              {block.children?.map((child: any) => {
+                let classes = "";
+                if (child.bold) return <strong class="font-bold text-brand-secondary">{child.text}</strong>;
+                if (child.italic) return <em class="italic">{child.text}</em>;
+                if (child.type === 'link') {
+                  const linkText = child.children?.map((c: any) => c.text).join('') || '';
+                  return (
+                    <a 
+                      href={child.url} 
+                      target={child.url.startsWith('http') ? '_blank' : '_self'}
+                      rel="noopener noreferrer"
+                      class="text-brand-primary underline decoration-brand-primary/30 hover:decoration-brand-primary transition-all duration-200"
+                    >
+                      {linkText}
+                    </a>
+                  );
+                }
+
+                if (child.code) {
+                      return (() => {
+                        const escapedCode = child.text.replace(/"/g, '&quot;');
+                        
+                        return (
+                          <span class="not-prose inline-flex items-center gap-1.5 bg-brand-secondary/5 border border-brand-secondary/10 rounded px-2 py-0.5 font-mono text-[14px] lg:text-[16px] text-brand-secondary select-all mx-0.5">
+                            <code>{child.text}</code>
+                            <button 
+                              class="copy-btn text-[10px] opacity-40 hover:opacity-100 transition-opacity duration-200 uppercase tracking-wider pl-1.5 border-l border-brand-secondary/20 hover:text-brand-primary"
+                              data-code={child.text}
+                              title="Copy code"
+                            >
+                              Copy
+                            </button>
+                          </span>
+                        );
+                      })();
+                    }
+
+                return child.text;
+              })}
+            </p>
+          );
+        }
+
+        // Handle Headings (H1 - H6)
+        if (block.type === 'heading') {
+          const headingText = block.children?.map((c: any) => c.text).join('') || '';
+          if (block.level === 1) return <h1 class="text-3xl font-accent font-bold mt-6 text-brand-secondary lg:text-[32px]">{headingText}</h1>;
+          if (block.level === 2) return <h2 class="text-2xl font-accent font-bold mt-6 text-brand-secondary lg:text-[28px]">{headingText}</h2>;
+          if (block.level === 3) return <h3 class="text-xl font-accent font-bold mt-4 text-brand-secondary lg:text-[24px]">{headingText}</h3>;
+          return <h4 class="text-lg font-accent font-bold mt-4 text-brand-secondary lg:text-[20px]">{headingText}</h4>;
+        }
+
+        // Handle Bulleted Lists
+        if (block.type === 'list' && block.format === 'unordered') {
+          return (
+            <ul class="list-disc list-inside pl-4 flex flex-col gap-2 font-light text-[16px] lg:text-[18px]">
+              {block.children?.map((listItem: any) => (
+                <li>{listItem.children?.map((c: any) => c.text).join('')}</li>
+              ))}
+            </ul>
+          );
+        }
+
+        // Handle Numbered Lists
+        if (block.type === 'list' && block.format === 'ordered') {
+          return (
+            <ol class="list-decimal list-inside pl-4 flex flex-col gap-2 font-light text-[16px] lg:text-[18px]">
+              {block.children?.map((listItem: any) => (
+                <li>{listItem.children?.map((c: any) => c.text).join('')}</li>
+              ))}
+            </ol>
+          );
+        }
+
+        {block.type === 'code' ? (() => {
+          const codeText = block.children?.map((c: any) => c.text).join('') || '';
+          
+          return (
+            <div class="not-prose code-block-wrapper relative group border border-brand-secondary/10 rounded-lg overflow-hidden bg-[#24292e]">
+              {/* Code Header Bar */}
+              <div class="flex items-center justify-between px-4 py-1.5 bg-brand-secondary/5 border-b border-brand-secondary/10 text-[10px] uppercase font-mono tracking-wider text-brand-secondary/40">
+                <span>code snippet</span>
+                <button 
+                  class="copy-btn hover:text-brand-primary transition-colors duration-200 flex items-center gap-1 py-1 px-2 rounded hover:bg-brand-secondary/5"
+                  data-code={codeText}
+                >
+                  Copy
+                </button>
+              </div>
+
+      {/* Astro's Syntax Highlighter Container */}
+      <div class="p-4 text-[12px] lg:text-[16px] overflow-x-auto font-mono leading-relaxed">
+        <Code code={codeText} lang="javascript" theme="github-dark" />
+      </div>
+    </div>
+  );
+})() : null}
+
+        // Handle Quote Blocks
+        if (block.type === 'quote') {
+          const quoteText = block.children?.map((c: any) => c.text).join('') || '';
+          return (
+            <blockquote class="border-l-2 border-brand-primary pl-4 italic text-brand-secondary/70 my-4 text-[16px] lg:text-[18px]">
+              <p>{quoteText}</p>
+            </blockquote>
+          );
+        }
+
+        return null;
+      })}
+    </div>
+    
+    <div class="pt-5">
+    <ButtonFilled  buttonAction='Back to All Entries' url="/blog" />
+    </div>
+
+  </article>
+</Layout>
+
+<script>
+  function setupCopyButtons() {
+    const copyButtons = document.querySelectorAll('.copy-btn');
+
+    copyButtons.forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const codeToCopy = btn.getAttribute('data-code') || "";
+        
+        try {
+          // Use the secure navigator clipboard API
+          await navigator.clipboard.writeText(codeToCopy);
+          
+          // Visual Feedback Switch
+          const originalText = btn.textContent;
+          btn.textContent = "Copied! ✓";
+          btn.classList.add('text-brand-primary');
+          
+          setTimeout(() => {
+            btn.textContent = originalText;
+            btn.classList.remove('text-brand-primary');
+          }, 2000);
+        } catch (err) {
+          console.error('Failed to copy text: ', err);
+        }
+      });
+    });
+  }
+
+  // Handle standard rendering and ViewTransition lifecycle swaps seamlessly
+  setupCopyButtons();
+  document.addEventListener('astro:after-swap', setupCopyButtons);
+</script>
+
+<style is:global>
+  /* Clean up Astro Shiki pre container background reset */
+  .code-block-wrapper pre {
+    background-color: transparent !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+</style>
