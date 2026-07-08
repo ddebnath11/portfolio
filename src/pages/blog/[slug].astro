@@ -36,7 +36,7 @@ const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
   day: 'numeric'
 });
 ---
-<Layout title={post.title} subtitle={post.category} pill="blog">
+<Layout title={post.title} pill="blog">
   <article class="w-full max-w-3xl mx-auto px-5 pb-24 pt-32 font-secondary">
     
     <header class="flex flex-col gap-4 pb-8 border-b border-brand-secondary/10 mb-8">
@@ -60,7 +60,7 @@ const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
         
         if (block.type === 'paragraph') {
           return (
-            <p class="font-blog text-[16px] lg:text-[18px]">
+            <p class="font-blog text-[16px] lg:text-[20px]">
               {block.children?.map((child: any) => {
                 let classes = "";
                 if (child.bold) return <strong class="font-bold text-brand-secondary">{child.text}</strong>;
