@@ -49,7 +49,7 @@ const categories = ['all', ...new Set(formattedPosts.map(post => post.category).
 ---
 
 <Layout title="Diptangshu Debnath" subtitle="Blogs" pill="blog">
-  <main class="w-full max-w-7xl mx-auto px-5 lg:px-30 pb-24 pt-32">
+  <main class="w-full mx-auto px-5 lg:px-30 pb-24 pt-32">
     
     <div class="flex flex-col gap-4 pb-8 border-b border-brand-secondary/10 lg:gap-6 items-center text-center">
       <h1 class="text-4xl md:text-5xl font-accent font-bold tracking-tight text-brand-secondary">
@@ -88,9 +88,9 @@ const categories = ['all', ...new Set(formattedPosts.map(post => post.category).
         ))}
       </div>
     </div>
-
-    <div id="blog-posts-container" class="w-full">
-      
+    
+      <div id="blog-posts-container" class="w-full max-w-6xl mx-auto flex flex-col items-stretch gap-0">      
+        
       {featuredPost && (
         <a 
           href={`/blog/${featuredPost.slug}/`}
