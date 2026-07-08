@@ -16,7 +16,7 @@
   /* Static Tokens (Global constants across ALL themes) */
   --font-primary: "Bricolage Grotesque", sans-serif;
   --font-blog: "Inter", sans-serif;
-  --color-brand-primary: #5065db;
+  --color-brand-primary: #E2531F
 
   /* VARIABLES */
   --color-brand-bg: var(--bg);
@@ -37,7 +37,7 @@
 }
 
 :root[data-theme="orange"] {
-  --color-brand-primary: #E2531F;
+  --color-brand-primary: #5065db;;
 }
 
 :root[data-theme="github"] {
