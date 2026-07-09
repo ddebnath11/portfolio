@@ -4,7 +4,6 @@ import { Code } from 'astro:components';
 import { fetchFromStrapi } from '../../lib/strapi';
 import ButtonFilled from '../../components/buttons/ButtonFilled.astro';
 
-// 1. Define the TypeScript interface to match your post structure
 interface Post {
   id: number;
   documentId: string;
@@ -13,23 +12,20 @@ interface Post {
   description: string;
   category: string;
   date: string;
-  postcontent: any[]; // The Strapi Rich Text JSON array
+  postcontent: any[]; 
 }
 
-// 2. Generate the static paths for every post at build time
 export async function getStaticPaths() {
   const posts = await fetchFromStrapi<Post[]>({ endpoint: 'posts' }) || [];
   
   return posts.map((post) => ({
-    params: { slug: post.slug }, // This maps directly to the [slug] filename
-    props: { post },             // Passes the full post data down to the component
+    params: { slug: post.slug }, 
+    props: { post },             
   }));
 }
 
-// 3. Grab the post data passed down from getStaticPaths
 const { post } = Astro.props;
 
-// 4. Clean up the date string formatting
 const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
   year: 'numeric',
   month: 'long',
@@ -62,7 +58,6 @@ const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
           return (
             <p class="font-blog text-[16px] lg:text-[20px]">
               {block.children?.map((child: any) => {
-                let classes = "";
                 if (child.bold) return <strong class="font-bold text-brand-secondary">{child.text}</strong>;
                 if (child.italic) return <em class="italic">{child.text}</em>;
                 if (child.type === 'link') {
@@ -80,23 +75,8 @@ const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
                 }
 
                 if (child.code) {
-                      return (() => {
-                        const escapedCode = child.text.replace(/"/g, '&quot;');
-                        
-                        return (
-                          <span class="not-prose inline-flex items-center gap-1.5 bg-brand-secondary/5 border border-brand-secondary/10 rounded px-2 py-0.5 font-mono text-[14px] lg:text-[16px] text-brand-secondary select-all mx-0.5">
-                            <code>{child.text}</code>
-                            <button 
-                              class="copy-btn text-[10px] opacity-40 hover:opacity-100 transition-opacity duration-200 uppercase tracking-wider pl-1.5 border-l border-brand-secondary/20 hover:text-brand-primary"
-                              data-code={child.text}
-                              title="Copy code"
-                            >
-                              Copy
-                            </button>
-                          </span>
-                        );
-                      })();
-                    }
+                  return <code class="px-1.5 py-0.5 bg-brand-secondary/5 border border-brand-secondary/10 rounded font-mono text-[14px] lg:text-[16px] text-brand-primary">{child.text}</code>;
+                }
 
                 return child.text;
               })}
@@ -135,12 +115,13 @@ const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
           );
         }
 
-        {block.type === 'code' ? (() => {
+        // Handle Standalone Code Blocks
+        if (block.type === 'code') {
           const codeText = block.children?.map((c: any) => c.text).join('') || '';
           
           return (
             <div class="not-prose code-block-wrapper relative group border border-brand-secondary/10 rounded-lg overflow-hidden bg-[#24292e]">
-              {/* Code Header Bar */}
+
               <div class="flex items-center justify-between px-4 py-1.5 bg-brand-secondary/5 border-b border-brand-secondary/10 text-[10px] uppercase font-mono tracking-wider text-brand-secondary/40">
                 <span>code snippet</span>
                 <button 
@@ -151,13 +132,13 @@ const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
                 </button>
               </div>
 
-      {/* Astro's Syntax Highlighter Container */}
-      <div class="p-4 text-[12px] lg:text-[16px] overflow-x-auto font-mono leading-relaxed">
-        <Code code={codeText} lang="javascript" theme="github-dark" />
-      </div>
-    </div>
-  );
-})() : null}
+              {/* Astro's Syntax Highlighter Container */}
+              <div class="p-4 text-[12px] lg:text-[16px] overflow-x-auto font-mono leading-relaxed">
+                <Code code={codeText} lang="javascript" theme="github-dark" />
+              </div>
+            </div>
+          );
+        }
 
         // Handle Quote Blocks
         if (block.type === 'quote') {
@@ -174,7 +155,7 @@ const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
     </div>
     
     <div class="pt-5">
-    <ButtonFilled  buttonAction='Back to All Entries' url="/blog" />
+      <ButtonFilled buttonAction='Back to All Entries' url="/blog" />
     </div>
 
   </article>

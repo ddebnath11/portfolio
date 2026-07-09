@@ -1,0 +1,31 @@
+---
+import { getCollection, render } from 'astro:content';
+
+// 1. Generate a path for every markdown file in your collection at build time
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map(project => ({
+    params: { id: project.id }, // project.id matches your file name (e.g., 'mitti-house')
+    props: { project },
+  }));
+}
+
+// 2. Grab the project data from the properties
+const { project } = Astro.props;
+const { Content } = await render(project); // This parses the markdown body into HTML components
+---
+
+<html lang="en">
+  <head>
+    <title>{project.data.title}</title>
+  </head>
+  <body class="bg-black text-white p-8 max-w-4xl mx-auto">
+    <span class="text-xs uppercase opacity-60">{project.data.project_category}</span>
+    <h1 class="text-4xl font-bold my-4">{project.data.title}</h1>
+    <hr class="border-white/10 my-6" />
+    
+    <article class="prose prose-invert">
+      <Content />
+    </article>
+  </body>
+</html>
