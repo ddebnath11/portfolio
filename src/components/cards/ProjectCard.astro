@@ -1,0 +1,35 @@
+---
+import ButtonFilled from '../buttons/ButtonFilled.astro';
+import ButtonOutline from '../buttons/ButtonOutline.astro';
+
+interface Props {
+  project_category:string;
+  project_name:string;
+  project_description: string;
+}
+
+const { project_category, project_name, project_description} = Astro.props;
+
+---
+<div class="border border-brand-secondary/10 bg-brand-bg/10 backdrop-blur-sm p-6 md:p-8 flex flex-col gap-6 items-start text-left rounded-none transition-all duration-300">
+
+          <div class="border border-brand-secondary/10 aspect-[16/9] w-full">
+
+
+
+          </div>
+
+
+          <span class="text-[10px] font-mono tracking-[0.15em] text-brand-secondary/40 uppercase">
+            {project_category}
+          </span>
+          
+          <div class="flex flex-col gap-2">
+            <h2 class="text-xl lg:text-2xl font-accent font-bold tracking-tight text-brand-secondary group-hover:text-brand-primary transition-colors duration-300">
+              {project_name}
+            </h2>
+            <p class="text-sm text-brand-secondary/50 font-secondary font-light leading-relaxed md:text-[16px] lg:text-[16px]">
+              {project_description}
+            </p>
+          </div>
+</div>
