@@ -6,15 +6,19 @@ interface Props {
   project_category:string;
   project_name:string;
   project_description: string;
+  slug:string;
   featured?:boolean
 }
 
-const { project_category, project_name, project_description, featured = false} = Astro.props;
+const { project_category, project_name, project_description, slug, featured = false} = Astro.props;
 
 ---
 {featured ? 
    
-    <div class="border border-brand-secondary/10 bg-brand-bg/10 backdrop-blur-sm p-6 md:p-8 flex flex-col gap-6 items-start text-left rounded-none transition-all duration-300">
+    <a class="border border-brand-secondary/10 bg-brand-bg/10 backdrop-blur-sm p-6 md:p-8 flex flex-col gap-6 items-start text-left rounded-none transition-all duration-300 hover:bg-brand-secondary/5 cursor-pointer"
+    
+    href={`/projects/${slug}`}
+    >
 
           <div class="border border-brand-secondary/10 aspect-[16/9] w-full">
 
@@ -37,7 +41,7 @@ const { project_category, project_name, project_description, featured = false} =
           </div>
 
       
-</div>   
+</a>   
 
 : 
 
