@@ -193,11 +193,3 @@ const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
   document.addEventListener('astro:after-swap', setupCopyButtons);
 </script>
 
-<style is:global>
-  /* Clean up Astro Shiki pre container background reset */
-  .code-block-wrapper pre {
-    background-color: transparent !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-</style>
