@@ -132,9 +132,8 @@ const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
                 </button>
               </div>
 
-              {/* Astro's Syntax Highlighter Container */}
               <div class="p-4 text-[12px] lg:text-[16px] overflow-x-auto font-mono leading-relaxed">
-                <Code code={codeText} lang="javascript" theme="github-dark" />
+                <Code code={codeText} lang={block.language || "javascript"} theme="github-dark" />
               </div>
             </div>
           );
