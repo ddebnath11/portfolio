@@ -1,20 +1,32 @@
 ---
-import { getCollection } from 'astro:content';
-
 import Layout from "../layouts/Layout.astro";
 import ButtonFilled from "../components/buttons/ButtonFilled.astro";
 import Header from "../components/sections/Header.astro";
 import ProjectCard from "../components/cards/ProjectCard.astro";
 
-// 1. Fetch all local markdown data files from your collection
-const allProjects = await getCollection('projects');
+import { fetchFromStrapi } from '../lib/strapi';
 
-// 2. Automatically generate a unique categories array from your markdown frontmatter files for your filters
-const categories = ["all", ...new Set(allProjects.map(project => project.data.project_category.toLowerCase()))];
+interface Project {
+  id: number;
+  documentId: string;
+  title: string;
+  slug: string;
+  description: string;
+  category: string;
+  featured?: boolean;
+  project_content: any[]; 
+}
+
+// 🛰️ Fetch ALL projects from Strapi for the listing view
+const allProjects = await fetchFromStrapi<Project[]>({ endpoint: 'projects' }) || [];
+
+// 🏷️ Dynamically extract unique categories for your filter pills container
+const uniqueCategories = [...new Set(allProjects.map(p => p.category).filter(Boolean))];
+const categories = ["all", ...uniqueCategories];
 ---
 
 <Layout title="Projects" subtitle="Diptangshu Debnath" pill="projects">
-<main class="w-full mx-auto px-5 lg:px-30 pb-24 pt-32">
+<main class="w-full max-w-7xl mx-auto px-5 lg:px-30 pb-24 pt-32">
 
   <Header 
       title="My Projects"
@@ -23,6 +35,7 @@ const categories = ["all", ...new Set(allProjects.map(project => project.data.pr
     <ButtonFilled buttonAction="Visit Github Profile" url="https://github.com/ddebnath11" newTab/>
   </Header>
 
+  {/* Filter & Search Bar Toolbar Row */}
   <div class="w-full py-8 border-b border-brand-secondary/10 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-6">
     <div class="relative w-full md:max-w-xs">
       <input 
@@ -36,7 +49,7 @@ const categories = ["all", ...new Set(allProjects.map(project => project.data.pr
     <div class="flex flex-wrap items-center gap-2" id="filter-pill-container">
       {categories.map((category) => (
         <button
-          data-category={category}
+          data-category={category.toLowerCase()}
           class="filter-btn px-3 py-1 text-xs font-mono uppercase tracking-wider rounded-md border transition-all duration-300 bg-brand-secondary/5 border-brand-secondary/10 text-brand-secondary/60 data-[active=true]:border-brand-primary data-[active=true]:text-brand-primary"
           data-active={category === "all" ? "true" : "false"}
         >
@@ -46,15 +59,20 @@ const categories = ["all", ...new Set(allProjects.map(project => project.data.pr
     </div>
   </div>
 
+  {/* Projects Grid Display Wrapper */}
   <div class="pt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="projects-grid">
     {allProjects.map((project) => (
-      <div class="project-item-wrapper" data-name={project.data.title.toLowerCase()} data-category={project.data.project_category.toLowerCase()}>
+      <div 
+        class="project-item-wrapper" 
+        data-name={project.title.toLowerCase()} 
+        data-category={project.category ? project.category.toLowerCase() : ""}
+      >
         <ProjectCard 
-           project_category={project.data.project_category}
-           project_name={project.data.title}
-           project_description={project.data.description}
-           slug={project.id} 
-           featured={project.data.featured}
+           project_category={project.category}
+           project_name={project.title}
+           project_description={project.description}
+           slug={project.slug} 
+           featured={project.featured}
         />
       </div>
     ))}
@@ -62,3 +80,51 @@ const categories = ["all", ...new Set(allProjects.map(project => project.data.pr
 
 </main>
 </Layout>
+
+<script>
+  function setupSearchAndFilters() {
+    const searchInput = document.getElementById('blog-search') as HTMLInputElement;
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const projectItems = document.querySelectorAll('.project-item-wrapper') as NodeListOf<HTMLElement>;
+
+    let currentSearch = "";
+    let currentCategory = "all";
+
+    function applyFilters() {
+      projectItems.forEach((item) => {
+        const name = item.getAttribute('data-name') || "";
+        const category = item.getAttribute('data-category') || "";
+
+        const matchesSearch = name.includes(currentSearch.toLowerCase());
+        const matchesCategory = currentCategory === "all" || category === currentCategory;
+
+        if (matchesSearch && matchesCategory) {
+          item.style.display = "block";
+        } else {
+          item.style.display = "none";
+        }
+      });
+    }
+
+    // Input Search Listener
+    searchInput?.addEventListener('input', (e) => {
+      currentSearch = (e.target as HTMLInputElement).value;
+      applyFilters();
+    });
+
+    // Pill Filter Button Listeners
+    filterButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach(b => b.setAttribute('data-active', 'false'));
+        btn.setAttribute('data-active', 'true');
+        
+        currentCategory = btn.getAttribute('data-category') || "all";
+        applyFilters();
+      });
+    });
+  }
+
+  // Initialize filtering script logic on standard loads and page transition swaps
+  setupSearchAndFilters();
+  document.addEventListener('astro:after-swap', setupSearchAndFilters);
+</script>
