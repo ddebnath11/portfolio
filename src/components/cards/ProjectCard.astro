@@ -45,7 +45,11 @@ const { project_category, project_name, project_description, slug, featured = fa
 
 : 
 
-<div class="border border-brand-secondary/10 bg-brand-bg/10 backdrop-blur-sm p-6 md:p-8 flex flex-col gap-6 items-start text-left rounded-none transition-all duration-300">
+<a class="border border-brand-secondary/10 bg-brand-bg/10 backdrop-blur-sm p-6 md:p-8 flex flex-col gap-6 items-start text-left rounded-none transition-all duration-300"
+
+href={`/projects/${slug}`}
+
+>
 
           <div class="border border-brand-secondary/10 aspect-[16/9] w-full">
 
@@ -66,7 +70,7 @@ const { project_category, project_name, project_description, slug, featured = fa
               {project_description}
             </p>
           </div>
-</div>
+</a>
 
 
 
