@@ -1,72 +1,64 @@
 ---
+import { getCollection } from 'astro:content';
+
 import Layout from "../layouts/Layout.astro";
-import Intro from "../components/sections/Intro.astro"
-import CTA from "../components/buttons/CTA.astro";
 import ButtonFilled from "../components/buttons/ButtonFilled.astro";
-import ButtonOutline from "../components/buttons/ButtonOutline.astro";
 import Header from "../components/sections/Header.astro";
 import ProjectCard from "../components/cards/ProjectCard.astro";
 
-const categories = ['test'];
+// 1. Fetch all local markdown data files from your collection
+const allProjects = await getCollection('projects');
+
+// 2. Automatically generate a unique categories array from your markdown frontmatter files for your filters
+const categories = ["all", ...new Set(allProjects.map(project => project.data.project_category.toLowerCase()))];
 ---
+
 <Layout title="Projects" subtitle="Diptangshu Debnath" pill="projects">
-
-
 <main class="w-full mx-auto px-5 lg:px-30 pb-24 pt-32">
-
 
   <Header 
       title="My Projects"
       subtitle="Here are my projects! Explore a project by clicking on it."
   >
-
-  <ButtonFilled buttonAction="Visit Github Profile" url="https://github.com/ddebnath11" newTab/>
-
+    <ButtonFilled buttonAction="Visit Github Profile" url="https://github.com/ddebnath11" newTab/>
   </Header>
 
-    <div class="w-full py-8 border-b border-brand-secondary/10 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-6">
-      
-      <div class="relative w-full md:max-w-xs">
-        <input 
-          type="text" 
-          id="blog-search" 
-          placeholder="search projects..." 
-          class="w-full bg-brand-secondary/5 border border-brand-secondary/20 rounded-lg px-4 py-2 text-sm font-secondary font-light text-brand-secondary placeholder-brand-secondary/40 focus:outline-none focus:border-brand-primary transition-colors duration-200"
+  <div class="w-full py-8 border-b border-brand-secondary/10 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-6">
+    <div class="relative w-full md:max-w-xs">
+      <input 
+        type="text" 
+        id="blog-search" 
+        placeholder="search projects..." 
+        class="w-full bg-brand-secondary/5 border border-brand-secondary/20 rounded-lg px-4 py-2 text-sm font-secondary font-light text-brand-secondary placeholder-brand-secondary/40 focus:outline-none focus:border-brand-primary transition-colors duration-200"
+      />
+    </div>
+
+    <div class="flex flex-wrap items-center gap-2" id="filter-pill-container">
+      {categories.map((category) => (
+        <button
+          data-category={category}
+          class="filter-btn px-3 py-1 text-xs font-mono uppercase tracking-wider rounded-md border transition-all duration-300 bg-brand-secondary/5 border-brand-secondary/10 text-brand-secondary/60 data-[active=true]:border-brand-primary data-[active=true]:text-brand-primary"
+          data-active={category === "all" ? "true" : "false"}
+        >
+          {category}
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <div class="pt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="projects-grid">
+    {allProjects.map((project) => (
+      <div class="project-item-wrapper" data-name={project.data.title.toLowerCase()} data-category={project.data.project_category.toLowerCase()}>
+        <ProjectCard 
+           project_category={project.data.project_category}
+           project_name={project.data.title}
+           project_description={project.data.description}
+           slug={project.id} 
+           featured={project.data.featured}
         />
       </div>
-
-      <div class="flex flex-wrap items-center gap-2" id="filter-pill-container">
-        {categories.map((category) => (
-          <button
-            data-category={category}
-            class="filter-btn px-3 py-1 text-xs font-mono uppercase tracking-wider rounded-md border transition-all duration-300 bg-brand-secondary/5 border-brand-secondary/10 text-brand-secondary/60 data-[active=true]:border-brand-primary data-[active=true]:text-brand-primary"
-            data-active={category === "all" ? "true" : "false"}
-          >
-            {category}
-          </button>
-        ))}
-      </div>
-    </div>
-
-    <div class="pt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-    <ProjectCard 
-       project_category="UI/UX"
-       project_name="UMS Oman"
-       project_description="A brand-new website for UMS Oman built using Astro."
-       slug="ums-oman"
-       featured
-    />
-
-
-    </div>
-
-
-
-
-  
-
+    ))}
+  </div>
 
 </main>
-
-
 </Layout>

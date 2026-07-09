@@ -1,31 +1,118 @@
 ---
 import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import ButtonFilled from '../../components/buttons/ButtonFilled.astro';
 
-// 1. Generate a path for every markdown file in your collection at build time
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
   return projects.map(project => ({
-    params: { id: project.id }, // project.id matches your file name (e.g., 'mitti-house')
+    params: { id: project.id },
     props: { project },
   }));
 }
 
-// 2. Grab the project data from the properties
 const { project } = Astro.props;
-const { Content } = await render(project); // This parses the markdown body into HTML components
+const { Content } = await render(project);
 ---
 
-<html lang="en">
-  <head>
-    <title>{project.data.title}</title>
-  </head>
-  <body class="bg-black text-white p-8 max-w-4xl mx-auto">
-    <span class="text-xs uppercase opacity-60">{project.data.project_category}</span>
-    <h1 class="text-4xl font-bold my-4">{project.data.title}</h1>
-    <hr class="border-white/10 my-6" />
+<Layout title={project.data.title} pill="project">
+  <article class="w-full max-w-3xl mx-auto px-5 pb-24 pt-32 font-secondary">
     
-    <article class="prose prose-invert">
+    <header class="flex flex-col gap-4 pb-8 border-b border-brand-secondary/10 mb-8">
+      <div class="flex items-center gap-2 text-sm font-primary uppercase tracking-wider text-brand-primary">
+        <span>{project.data.project_category}</span>
+      </div>
+      
+      <h1 class="text-3xl md:text-5xl font-accent font-bold tracking-tight text-brand-secondary leading-tight">
+        {project.data.title}
+      </h1>
+      
+      <p class="text-base md:text-lg text-brand-secondary/60 font-light italic leading-relaxed">
+        {project.data.description}
+      </p>
+    </header>
+
+    <div class="prose max-w-none flex flex-col gap-6 text-brand-secondary/90 text-sm md:text-base leading-relaxed 
+                prose-headings:font-accent prose-headings:font-bold prose-headings:text-brand-secondary
+                prose-h1:text-3xl lg:prose-h1:text-[32px] prose-h1:mt-6
+                prose-h2:text-2xl lg:prose-h2:text-[28px] prose-h2:mt-6
+                prose-h3:text-xl lg:prose-h3:text-[24px] prose-h3:mt-4
+                prose-p:font-blog prose-p:text-[16px] lg:prose-p:text-[20px]
+                prose-a:text-brand-primary prose-a:underline prose-a:decoration-brand-primary/30 hover:prose-a:decoration-brand-primary
+                prose-strong:font-bold prose-strong:text-brand-secondary
+                prose-em:italic
+                prose-ul:list-disc prose-ul:list-inside prose-ul:pl-4 prose-ul:flex prose-ul:flex-col prose-ul:gap-2 prose-ul:font-light prose-ul:text-[16px] lg:prose-ul:text-[18px]
+                prose-ol:list-decimal prose-ol:list-inside prose-ol:pl-4 prose-ol:flex prose-ol:flex-col prose-ol:gap-2 prose-ol:font-light prose-ol:text-[16px] lg:prose-ol:text-[18px]
+                prose-blockquote:border-l-2 prose-blockquote:border-brand-primary prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-brand-secondary/70 prose-blockquote:my-4 prose-blockquote:text-[16px] lg:prose-blockquote:text-[18px]
+                prose-code:px-1.5 prose-code:py-0.5 prose-code:bg-brand-secondary/5 prose-code:border prose-code:border-brand-secondary/10 prose-code:rounded prose-code:font-mono prose-code:text-[14px] lg:prose-code:text-[16px] prose-code:text-brand-primary">
+      
       <Content />
-    </article>
-  </body>
-</html>
+      
+    </div>
+    
+    <div class="pt-5">
+      <ButtonFilled buttonAction='Back to All Projects' url="/projects" />
+    </div>
+
+  </article>
+</Layout>
+
+<script>
+  function setupCopyButtons() {
+    const preBlocks = document.querySelectorAll('pre');
+
+    preBlocks.forEach((pre) => {
+      if (pre.parentElement && pre.parentElement.classList.contains('code-block-wrapper')) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'not-prose code-block-wrapper relative group border border-brand-secondary/10 rounded-lg overflow-hidden bg-[#24292e] my-6';
+      
+      const toolbar = document.createElement('div');
+      toolbar.className = 'flex items-center justify-between px-4 py-1.5 bg-brand-secondary/5 border-b border-brand-secondary/10 text-[10px] uppercase font-mono tracking-wider text-brand-secondary/40';
+      toolbar.innerHTML = `
+        <span>code snippet</span>
+        <button class="copy-btn hover:text-brand-primary transition-colors duration-200 flex items-center gap-1 py-1 px-2 rounded hover:bg-brand-secondary/5">
+          Copy
+        </button>
+      `;
+
+      const codeContent = pre.textContent || "";
+      const copyBtn = toolbar.querySelector('.copy-btn');
+      
+      copyBtn?.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(codeContent);
+          const originalText = copyBtn.textContent;
+          copyBtn.textContent = "Copied! ✓";
+          copyBtn.classList.add('text-brand-primary');
+          
+          setTimeout(() => {
+            copyBtn.textContent = originalText;
+            copyBtn.classList.remove('text-brand-primary');
+          }, 2000);
+        } catch (err) {
+          console.error('Failed to copy text: ', err);
+        }
+      });
+
+      pre.parentNode?.insertBefore(wrapper, pre);
+      wrapper.appendChild(toolbar);
+      
+      const scrollContainer = document.createElement('div');
+      scrollContainer.className = 'p-4 text-[12px] lg:text-[16px] overflow-x-auto font-mono leading-relaxed';
+      wrapper.appendChild(scrollContainer);
+      scrollContainer.appendChild(pre);
+    });
+  }
+
+  setupCopyButtons();
+  document.addEventListener('astro:after-swap', setupCopyButtons);
+</script>
+
+<style is:global>
+  .code-block-wrapper pre {
+    background-color: transparent !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+</style>
