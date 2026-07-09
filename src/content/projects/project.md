@@ -1,7 +1,7 @@
 ---
 title: "Mitti House"
 description: "A sustainable digital design footprint."
-project_category: "Architecture"
+project_category: "webdev"
 featured: true
 image:
   url: "/images/mitti-house-thumb.jpg"
@@ -9,5 +9,5 @@ image:
 tags: ["Design", "3D Modeling", "Astro"]
 ---
 
-### Project Overview
-This is where your hand-crafted content, descriptions, and structural case study details live for the Mitti House project...
+# Project Overview
+This is where your hand-crafted content, descriptions, and structural case study details live for the Mitti House project!

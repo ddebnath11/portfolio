@@ -123,7 +123,7 @@ const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
             <div class="not-prose code-block-wrapper relative group border border-brand-secondary/10 rounded-lg overflow-hidden bg-[#24292e]">
 
               <div class="flex items-center justify-between px-4 py-1.5 bg-brand-secondary/5 border-b border-brand-secondary/10 text-[10px] uppercase font-mono tracking-wider text-brand-secondary/40">
-                <span>code snippet</span>
+                <span>{block.language}</span>
                 <button 
                   class="copy-btn hover:text-brand-primary transition-colors duration-200 flex items-center gap-1 py-1 px-2 rounded hover:bg-brand-secondary/5"
                   data-code={codeText}

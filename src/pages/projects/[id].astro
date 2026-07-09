@@ -32,23 +32,23 @@ const { Content } = await render(project);
       </p>
     </header>
 
-    <div class="prose max-w-none flex flex-col gap-6 text-brand-secondary/90 text-sm md:text-base leading-relaxed 
-                prose-headings:font-accent prose-headings:font-bold prose-headings:text-brand-secondary
-                prose-h1:text-3xl lg:prose-h1:text-[32px] prose-h1:mt-6
-                prose-h2:text-2xl lg:prose-h2:text-[28px] prose-h2:mt-6
-                prose-h3:text-xl lg:prose-h3:text-[24px] prose-h3:mt-4
-                prose-p:font-blog prose-p:text-[16px] lg:prose-p:text-[20px]
-                prose-a:text-brand-primary prose-a:underline prose-a:decoration-brand-primary/30 hover:prose-a:decoration-brand-primary
-                prose-strong:font-bold prose-strong:text-brand-secondary
-                prose-em:italic
-                prose-ul:list-disc prose-ul:list-inside prose-ul:pl-4 prose-ul:flex prose-ul:flex-col prose-ul:gap-2 prose-ul:font-light prose-ul:text-[16px] lg:prose-ul:text-[18px]
-                prose-ol:list-decimal prose-ol:list-inside prose-ol:pl-4 prose-ol:flex prose-ol:flex-col prose-ol:gap-2 prose-ol:font-light prose-ol:text-[16px] lg:prose-ol:text-[18px]
-                prose-blockquote:border-l-2 prose-blockquote:border-brand-primary prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-brand-secondary/70 prose-blockquote:my-4 prose-blockquote:text-[16px] lg:prose-blockquote:text-[18px]
-                prose-code:px-1.5 prose-code:py-0.5 prose-code:bg-brand-secondary/5 prose-code:border prose-code:border-brand-secondary/10 prose-code:rounded prose-code:font-mono prose-code:text-[14px] lg:prose-code:text-[16px] prose-code:text-brand-primary">
-      
-      <Content />
-      
-    </div>
+      <div class="prose prose-base md:prose-lg lg:prose-xl max-w-none flex flex-col gap-6 text-brand-secondary/90 
+                  prose-headings:font-accent prose-headings:font-bold prose-headings:text-brand-secondary
+                  prose-h1:text-3xl lg:prose-h1:text-[32px] prose-h1:mt-6
+                  prose-h2:text-2xl lg:prose-h2:text-[28px] prose-h2:mt-6
+                  prose-h3:text-xl lg:prose-h3:text-[24px] prose-h3:mt-4
+                  prose-p:font-blog lg:text-[20px]
+                  prose-a:text-brand-primary prose-a:underline prose-a:decoration-brand-primary/30 hover:prose-a:decoration-brand-primary
+                  prose-strong:font-bold prose-strong:text-brand-secondary
+                  prose-em:italic
+                  prose-ul:list-disc prose-ul:list-inside prose-ul:pl-4 prose-ul:flex prose-ul:flex-col prose-ul:gap-2 prose-ul:font-light
+                  prose-ol:list-decimal prose-ol:list-inside prose-ol:pl-4 prose-ol:flex prose-ol:flex-col prose-ol:gap-2 prose-ol:font-light
+                  prose-blockquote:border-l-2 prose-blockquote:border-brand-primary prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-brand-secondary/70 prose-blockquote:my-4
+                  prose-code:px-1.5 prose-code:py-0.5 prose-code:bg-brand-secondary/5 prose-code:border prose-code:border-brand-secondary/10 prose-code:rounded prose-code:font-mono prose-code:text-brand-primary">
+        
+        <Content />
+        
+      </div>
     
     <div class="pt-5">
       <ButtonFilled buttonAction='Back to All Projects' url="/projects" />
