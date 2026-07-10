@@ -8,9 +8,10 @@ interface Props {
   project_description: string;
   slug:string;
   featured?:boolean
+  thumbnail?:string
 }
 
-const { project_category, project_name, project_description, slug, featured = false} = Astro.props;
+const { project_category, project_name, project_description, slug, featured = false, thumbnail} = Astro.props;
 
 ---
 {featured ? 
@@ -21,6 +22,8 @@ const { project_category, project_name, project_description, slug, featured = fa
     >
 
           <div class="border border-brand-secondary/10 aspect-[16/9] w-full">
+
+            <img src= {thumbnail} class="w-full">
 
 
 
@@ -52,6 +55,8 @@ href={`/projects/${slug}`}
 >
 
           <div class="border border-brand-secondary/10 aspect-[16/9] w-full">
+
+             <img src= {thumbnail} class="w-full">
 
 
 

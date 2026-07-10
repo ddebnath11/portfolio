@@ -5,6 +5,25 @@ import ButtonFilled from '../../components/buttons/ButtonFilled.astro';
 import { Code } from 'astro:components';
 import { fetchFromStrapi } from '../../lib/strapi';
 
+interface StrapiImageFormats {
+  thumbnail?: { url: string; width: number; height: number };
+  small?: { url: string; width: number; height: number };
+  medium?: { url: string; width: number; height: number };
+  large?: { url: string; width: number; height: number };
+}
+
+interface StrapiImage {
+  id: number;
+  documentId: string;
+  name: string;
+  alternativeText: string | null;
+  caption: string | null;
+  width: number;
+  height: number;
+  formats: StrapiImageFormats | null;
+  url: string; 
+}
+
 interface Project {
   id: number;
   documentId: string;
@@ -13,11 +32,13 @@ interface Project {
   description: string;
   category: string;
   project_content: any[]; 
+  project_thumbnail: StrapiImage;
 }
 
 export async function getStaticPaths() {
-  // 🛰️ FIXED: Endpoint changed from 'posts' to 'projects' to fetch the correct dataset
-  const projects = await fetchFromStrapi<Project[]>({ endpoint: 'projects' }) || [];
+  // 🛰️ IMPORTANT: Ensure your fetchFromStrapi function passes the populate parameter!
+  // It needs to match: endpoint: 'projects?populate=project_thumbnail' or 'projects?populate=*'
+  const projects = await fetchFromStrapi<Project[]>({ endpoint: 'projects?populate=*' }) || [];
   
   return projects.map((project) => ({
     params: { slug: project.slug }, 
@@ -26,6 +47,12 @@ export async function getStaticPaths() {
 }
 
 const { project } = Astro.props;
+
+// 🔗 Stitch your Strapi base URL server domain to the dynamic thumbnail upload location tail
+const STRAPI_URL = import.meta.env.STRAPI_URL || 'http://localhost:1337';
+const imageUrl = project.project_thumbnail?.url 
+  ? `${STRAPI_URL}${project.project_thumbnail.url}` 
+  : null;
 ---
 
 <Layout title={project.title} pill="project">
@@ -40,9 +67,26 @@ const { project } = Astro.props;
         {project.title}
       </h1>
       
-      <p class="text-base md:text-lg text-brand-secondary/60 font-light italic leading-relaxed">
+      <p class="text-base md:text-lg text-brand-secondary/60 font-light italic leading-relaxed mb-2">
         {project.description}
       </p>
+
+      {imageUrl ? (
+        <div class="w-full overflow-hidden rounded-xl border border-brand-secondary/10 bg-brand-secondary/5 aspect-[16/9] mt-4">
+          <img 
+            src={imageUrl} 
+            alt={project.project_thumbnail.alternativeText || project.title} 
+            class="w-full h-full object-cover select-none pointer-events-none"
+            loading="eager"
+          />
+        </div>
+      ) : (
+        /* 🚨 DATA TRACKING BLOCK: If this shows up on your screen, your fetch configuration is broken */
+        <div class="w-full py-4 px-6 border border-dashed border-red-500/30 rounded-xl bg-red-500/5 text-xs text-red-400 font-mono mt-4">
+          [DEBUG INFO]: Thumbnail data field is currently missing or null in the Strapi payload. 
+          Make sure your API fetch matches: 'projects?populate=*'
+        </div>
+      )}
     </header>
 
     <div class="prose max-w-none flex flex-col gap-6 text-brand-secondary/90 text-sm md:text-base leading-relaxed">
@@ -125,8 +169,6 @@ const { project } = Astro.props;
                   Copy
                 </button>
               </div>
-
-              {/* 🏝️ FIXED: Removed the extra padding container wrapper that caused the double box glitch */}
               <Code code={codeText} lang={block.language || "javascript"} theme="github-dark" />
             </div>
           );
@@ -146,7 +188,6 @@ const { project } = Astro.props;
       })}
     </div>
 
-    {/* 📦 FIXED: Moved this layout component safely back inside the main article container bounds */}
     <div class="pt-8">
       <ButtonFilled buttonAction='Back to All Projects' url="/projects" />
     </div>
@@ -156,11 +197,9 @@ const { project } = Astro.props;
 
 <script>
   function setupCopyButtons() {
-    // 🔍 FIXED: Target the buttons directly via attribute since Astro's <Code> component generates your raw code blocks now!
     const copyButtons = document.querySelectorAll('.copy-btn');
 
     copyButtons.forEach((btn) => {
-      // Avoid stacking script event listeners on multi-swaps
       if (btn.getAttribute('data-listener') === 'true') return;
       btn.setAttribute('data-listener', 'true');
 
@@ -188,7 +227,6 @@ const { project } = Astro.props;
 </script>
 
 <style is:global>
-  /* 🎨 Clean global presentation modifiers for component structures */
   .code-block-wrapper pre {
     background-color: transparent !important;
     margin: 0 !important;
@@ -202,7 +240,6 @@ const { project } = Astro.props;
     }
   }
 
-  /* Structural headings configuration overrides */
   .prose h1, .prose h2, .prose h3, .prose h4 {
     color: currentColor !important;
   }

@@ -6,6 +6,25 @@ import ProjectCard from "../components/cards/ProjectCard.astro";
 
 import { fetchFromStrapi } from '../lib/strapi';
 
+interface StrapiImageFormats {
+  thumbnail?: { url: string; width: number; height: number };
+  small?: { url: string; width: number; height: number };
+  medium?: { url: string; width: number; height: number };
+  large?: { url: string; width: number; height: number };
+}
+
+interface StrapiImage {
+  id: number;
+  documentId: string;
+  name: string;
+  alternativeText: string | null;
+  caption: string | null;
+  width: number;
+  height: number;
+  formats: StrapiImageFormats | null;
+  url: string; 
+}
+
 interface Project {
   id: number;
   documentId: string;
@@ -15,14 +34,16 @@ interface Project {
   category: string;
   featured?: boolean;
   project_content: any[]; 
+  project_thumbnail: StrapiImage; // 🖼️ Added media interface relation map here
 }
 
-// 🛰️ Fetch ALL projects from Strapi for the listing view
-const allProjects = await fetchFromStrapi<Project[]>({ endpoint: 'projects' }) || [];
+// 🛰️ FETCH DATA MODIFIER: Added ?populate=* parameter query string so Strapi packs media relations
+const allProjects = await fetchFromStrapi<Project[]>({ endpoint: 'projects?populate=*' }) || [];
 
-// 🏷️ Dynamically extract unique categories for your filter pills container
 const uniqueCategories = [...new Set(allProjects.map(p => p.category).filter(Boolean))];
 const categories = ["all", ...uniqueCategories];
+
+const STRAPI_URL = import.meta.env.STRAPI_URL || 'http://localhost:1337';
 ---
 
 <Layout title="Projects" subtitle="Diptangshu Debnath" pill="projects">
@@ -61,21 +82,29 @@ const categories = ["all", ...uniqueCategories];
 
   {/* Projects Grid Display Wrapper */}
   <div class="pt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="projects-grid">
-    {allProjects.map((project) => (
-      <div 
-        class="project-item-wrapper" 
-        data-name={project.title.toLowerCase()} 
-        data-category={project.category ? project.category.toLowerCase() : ""}
-      >
-        <ProjectCard 
-           project_category={project.category}
-           project_name={project.title}
-           project_description={project.description}
-           slug={project.slug} 
-           featured={project.featured}
-        />
-      </div>
-    ))}
+    {allProjects.map((project) => {
+      // Build the absolute image asset URL path string for each individual card loop item
+      const cardImageUrl = project.project_thumbnail?.url 
+        ? `${STRAPI_URL}${project.project_thumbnail.url}` 
+        : "";
+
+      return (
+        <div 
+          class="project-item-wrapper" 
+          data-name={project.title.toLowerCase()} 
+          data-category={project.category ? project.category.toLowerCase() : ""}
+        >
+          <ProjectCard 
+             project_category={project.category}
+             project_name={project.title}
+             project_description={project.description}
+             slug={project.slug} 
+             featured={project.featured}
+             thumbnail={cardImageUrl} 
+          />
+        </div>
+      );
+    })}
   </div>
 
 </main>
@@ -106,13 +135,11 @@ const categories = ["all", ...uniqueCategories];
       });
     }
 
-    // Input Search Listener
     searchInput?.addEventListener('input', (e) => {
       currentSearch = (e.target as HTMLInputElement).value;
       applyFilters();
     });
 
-    // Pill Filter Button Listeners
     filterButtons.forEach((btn) => {
       btn.addEventListener('click', () => {
         filterButtons.forEach(b => b.setAttribute('data-active', 'false'));
@@ -124,7 +151,6 @@ const categories = ["all", ...uniqueCategories];
     });
   }
 
-  // Initialize filtering script logic on standard loads and page transition swaps
   setupSearchAndFilters();
   document.addEventListener('astro:after-swap', setupSearchAndFilters);
 </script>
