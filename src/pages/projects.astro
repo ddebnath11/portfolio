@@ -4,46 +4,7 @@ import ButtonFilled from "../components/buttons/ButtonFilled.astro";
 import Header from "../components/sections/Header.astro";
 import ProjectCard from "../components/cards/ProjectCard.astro";
 
-import { fetchFromStrapi } from '../lib/strapi';
 
-interface StrapiImageFormats {
-  thumbnail?: { url: string; width: number; height: number };
-  small?: { url: string; width: number; height: number };
-  medium?: { url: string; width: number; height: number };
-  large?: { url: string; width: number; height: number };
-}
-
-interface StrapiImage {
-  id: number;
-  documentId: string;
-  name: string;
-  alternativeText: string | null;
-  caption: string | null;
-  width: number;
-  height: number;
-  formats: StrapiImageFormats | null;
-  url: string; 
-}
-
-interface Project {
-  id: number;
-  documentId: string;
-  title: string;
-  slug: string;
-  description: string;
-  category: string;
-  featured?: boolean;
-  project_content: any[]; 
-  project_thumbnail: StrapiImage; // 🖼️ Added media interface relation map here
-}
-
-// 🛰️ FETCH DATA MODIFIER: Added ?populate=* parameter query string so Strapi packs media relations
-const allProjects = await fetchFromStrapi<Project[]>({ endpoint: 'projects?populate=*' }) || [];
-
-const uniqueCategories = [...new Set(allProjects.map(p => p.category).filter(Boolean))];
-const categories = ["all", ...uniqueCategories];
-
-const STRAPI_URL = import.meta.env.STRAPI_URL || 'http://localhost:1337';
 ---
 
 <Layout title="Projects" subtitle="Diptangshu Debnath" pill="projects">
@@ -68,43 +29,31 @@ const STRAPI_URL = import.meta.env.STRAPI_URL || 'http://localhost:1337';
     </div>
 
     <div class="flex flex-wrap items-center gap-2" id="filter-pill-container">
-      {categories.map((category) => (
+     
         <button
-          data-category={category.toLowerCase()}
+
           class="filter-btn px-3 py-1 text-xs font-mono uppercase tracking-wider rounded-md border transition-all duration-300 bg-brand-secondary/5 border-brand-secondary/10 text-brand-secondary/60 data-[active=true]:border-brand-primary data-[active=true]:text-brand-primary"
-          data-active={category === "all" ? "true" : "false"}
         >
-          {category}
         </button>
-      ))}
+
     </div>
   </div>
 
   {/* Projects Grid Display Wrapper */}
   <div class="pt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="projects-grid">
-    {allProjects.map((project) => {
-      // Build the absolute image asset URL path string for each individual card loop item
-      const cardImageUrl = project.project_thumbnail?.url 
-        ? `${STRAPI_URL}${project.project_thumbnail.url}` 
-        : "";
+    
 
-      return (
-        <div 
-          class="project-item-wrapper" 
-          data-name={project.title.toLowerCase()} 
-          data-category={project.category ? project.category.toLowerCase() : ""}
-        >
+   
+        
           <ProjectCard 
-             project_category={project.category}
-             project_name={project.title}
-             project_description={project.description}
-             slug={project.slug} 
-             featured={project.featured}
-             thumbnail={cardImageUrl} 
+             project_category= "ui/ux"
+             project_name="StatGram v1"
+             project_description= "Project Description"
+             slug= "statgram-v1"
+             featured
           />
-        </div>
-      );
-    })}
+      
+
   </div>
 
 </main>
