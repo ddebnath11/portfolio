@@ -23,7 +23,7 @@ const { pillarNum, pillarTitle, pillarDescription , logos = []} = Astro.props;
           <div class="flex flex-row gap-4">
 
               {logos.length > 0 && (
-                    <div class="flex flex-row gap-3">
+                    <div class="grid grid-cols-2 gap-2 lg:grid-cols-3">
                       {logos.map((logoSrc) => (
                         <div class="h-14 w-14 border border-brand-secondary/20 rounded-none flex items-center justify-center p-3 lg:h-16 lg:w-16">
                           <img 
@@ -49,9 +49,4 @@ const { pillarNum, pillarTitle, pillarDescription , logos = []} = Astro.props;
           </div>
 
         
-
-
-          <div class="flex">
-            <ButtonOutline buttonAction='View More'/>
-          </div>
 </div>

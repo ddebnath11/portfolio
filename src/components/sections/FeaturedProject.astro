@@ -8,9 +8,10 @@ interface Props {
   project_view_link?: string;
   project_github?: string;
   project_img_url: string;
+  project_launch?:string;
 }
 
-const { project_title, project_description, project_view_link, project_github, project_img_url } = Astro.props;
+const { project_title, project_description, project_view_link, project_github, project_img_url, project_launch } = Astro.props;
 ---
 <div class="p-2 lg:px-30 lg:py-5 w-full">
   <div class="w-full flex flex-col items-center justify-start text-center gap-6 md:gap-8 p-2">
@@ -38,7 +39,7 @@ const { project_title, project_description, project_view_link, project_github, p
 
           <div class="flex flex-col items-left gap-4 pt-2 lg:gap-4 md:flex md:flex-row md:items-center">
             {/* ✅ FIXED: Dynamic links connected with fallbacks */}
-            <ButtonFilled buttonAction="View Project" url={project_view_link || "#"} />
+            <ButtonFilled buttonAction="Launch Project" url={project_launch || "#"} />
             <ButtonOutline buttonAction="Source Code" url={project_github || "#"} newTab/>
           </div>
         </div>
@@ -57,6 +58,7 @@ const { project_title, project_description, project_view_link, project_github, p
               src={project_img_url} 
               alt={`${project_title} Project Cover`} 
               class="w-full h-full object-cover"
+              loading="lazy"
             />
           </div>
         </div>
