@@ -9,16 +9,15 @@ interface Props {
   slug:string;
   featured?:boolean
   thumbnail?:string
+  launch?:string
 }
 
-const { project_category, project_name, project_description, slug, featured = false, thumbnail} = Astro.props;
+const { project_category, project_name, project_description, slug, featured = false, thumbnail, launch} = Astro.props;
 
 ---
 {featured ? 
    
-    <a class="border border-brand-secondary/10 bg-brand-bg/10 backdrop-blur-sm p-6 md:p-8 flex flex-col gap-6 items-start text-left rounded-none transition-all duration-300 hover:bg-brand-secondary/5 cursor-pointer"
-    
-    href={`/projects/${slug}`}
+    <div class="border border-brand-secondary/10 bg-brand-bg/10 backdrop-blur-sm p-6 md:p-8 flex flex-col gap-6 items-start text-left rounded-xl transition-all duration-300 hover:bg-brand-secondary/2 cursor-pointer"
     >
 
           <div class="border border-brand-secondary/10 aspect-[16/9] w-full">
@@ -41,16 +40,25 @@ const { project_category, project_name, project_description, slug, featured = fa
             <p class="text-sm text-brand-secondary/50 font-secondary font-light leading-relaxed md:text-[16px] lg:text-[16px]">
               {project_description}
             </p>
+            
+            
           </div>
 
+          <ButtonFilled buttonAction='Launch' url={launch}/>
+          
+
+          
+
+
+          
+
       
-</a>   
+</div>   
 
 : 
 
-<a class="border border-brand-secondary/10 bg-brand-bg/10 backdrop-blur-sm p-6 md:p-8 flex flex-col gap-6 items-start text-left rounded-none transition-all duration-300"
+<div class="border border-brand-secondary/10 bg-brand-bg/10 backdrop-blur-sm p-6 md:p-8 flex flex-col gap-6 items-start text-left rounded-none transition-all duration-300"
 
-href={`/projects/${slug}`}
 
 >
 
@@ -75,7 +83,7 @@ href={`/projects/${slug}`}
               {project_description}
             </p>
           </div>
-</a>
+</div>
 
 
 

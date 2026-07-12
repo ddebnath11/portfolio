@@ -6,6 +6,7 @@ export interface ProjectData {
   featured?: boolean;
   thumbnail: string;
   github?: string;
+  launch?:string;
 }
 
 export const projectsList: ProjectData[] = [
@@ -16,7 +17,8 @@ export const projectsList: ProjectData[] = [
     category: "WEBDEV",
     featured: true,
     thumbnail: "../images/statgram-thumb.png",
-    github: "https://github.com/ddebnath11/cleanstats"
+    github: "https://github.com/ddebnath11/cleanstats",
+    launch: "https://statgram.netlify.app/"
   },
 
 ];
