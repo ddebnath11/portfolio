@@ -4,6 +4,8 @@ import '../../styles/global.css';
 import { Image } from 'astro:assets';
 import Logo from '../assets/logo-main.svg';
 import Controls from './Controls.astro';
+import ButtonFilled from '../buttons/ButtonFilled.astro';
+
 
 interface Props {
   pill: string;
@@ -48,7 +50,11 @@ href="/"
 
 </a>
 
-  <div class="relative z-50">
+ 
+
+  <div class="relative z-50 flex flex-row gap-4">
+   <button class="border border-brand-primary py-2 px-4 rounded-xl text-sm text-brand-primary">Download Resume</button>
+
     <button 
       id="custom-hamburger"
       class="relative group focus:outline-none"
