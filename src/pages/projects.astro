@@ -4,7 +4,10 @@ import ButtonFilled from "../components/buttons/ButtonFilled.astro";
 import Header from "../components/sections/Header.astro";
 import ProjectCard from "../components/cards/ProjectCard.astro";
 
+import { projectsList } from "../data/projects";
 
+const uniqueCategories = [...new Set(projectsList.map(p => p.category).filter(Boolean))];
+const categories = ["all", ...uniqueCategories];
 ---
 
 <Layout title="Projects" subtitle="Diptangshu Debnath" pill="projects">
@@ -17,7 +20,6 @@ import ProjectCard from "../components/cards/ProjectCard.astro";
     <ButtonFilled buttonAction="Visit Github Profile" url="https://github.com/ddebnath11" newTab/>
   </Header>
 
-  {/* Filter & Search Bar Toolbar Row */}
   <div class="w-full py-8 border-b border-brand-secondary/10 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-6">
     <div class="relative w-full md:max-w-xs">
       <input 
@@ -28,33 +30,40 @@ import ProjectCard from "../components/cards/ProjectCard.astro";
       />
     </div>
 
+    {/* ✅ FIXED: Loop mapping added to generate functional filter buttons */}
     <div class="flex flex-wrap items-center gap-2" id="filter-pill-container">
-     
+      {categories.map((category) => (
         <button
-
+          data-category={category.toLowerCase()}
           class="filter-btn px-3 py-1 text-xs font-mono uppercase tracking-wider rounded-md border transition-all duration-300 bg-brand-secondary/5 border-brand-secondary/10 text-brand-secondary/60 data-[active=true]:border-brand-primary data-[active=true]:text-brand-primary"
+          data-active={category === "all" ? "true" : "false"}
         >
+          {category}
         </button>
-
+      ))}
     </div>
   </div>
 
   {/* Projects Grid Display Wrapper */}
-  <div class="pt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="projects-grid">
     
 
    
-        
-          <ProjectCard 
-             project_category= "ui/ux"
-             project_name="StatGram v1"
-             project_description= "Project Description"
-             slug= "statgram-v1"
-             featured
-          />
+  <div class="pt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    {projectsList.map((project) => (
+      <div class="project-item-wrapper" data-name={project.title.toLowerCase()}>
+        <ProjectCard 
+           project_category={project.category}
+           project_name={project.title}
+           project_description={project.description}
+           slug={project.slug} 
+           featured={project.featured}
+           thumbnail={project.thumbnail} 
+        />
+      </div>
+    ))}
+  </div>
       
 
-  </div>
 
 </main>
 </Layout>

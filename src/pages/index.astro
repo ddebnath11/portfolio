@@ -4,13 +4,28 @@ import Hero from '../components/sections/Hero.astro';
 import Layout from '../layouts/Layout.astro';
 import FunText from '../components/sections/FunText.astro'
 
+import { projectsList } from "../data/projects";
+
+const project = projectsList[0];
 ---
 
 <Layout title="Diptangshu Debnath - Home" pill="home">
    
-  <Hero />
+  <Hero character_exists/>
 
-  <FeaturedProject />
+  <FeaturedProject 
+
+     project_title= {project.title}
+     project_description={project.description}
+     project_img_url={project.thumbnail}
+     project_view_link={`/projects/${project.slug}`}
+     project_github={project.github}
+
+  
+  
+  
+  
+  />
   <FunText />
   
  

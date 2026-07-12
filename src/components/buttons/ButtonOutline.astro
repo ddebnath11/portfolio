@@ -2,12 +2,18 @@
 interface Props {
   buttonAction: string;
   url?: string;
+  newTab?:boolean;
 }
 
-const { buttonAction, url } = Astro.props;
+const { buttonAction, url, newTab=false } = Astro.props;
+
+const target = newTab ? "_blank" : "_self";
+const rel = newTab ? "noopener noreferrer" : undefined;
 ---
 <a 
   href={url}
+  target={target}
+  rel={rel}
   class="inline-flex items-center justify-center border border-brand-primary/50  rounded-xl text-brand-primary cursor-pointer transform transition-all duration-300 text-xs font-medium no-underline hover:border-brand-primary hover:bg-brand-bg  md:text-sm   lg:text-[18px] p-4"
 >
   {buttonAction}

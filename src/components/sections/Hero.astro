@@ -5,6 +5,13 @@ import CTA from '../buttons/CTA.astro';
 import dDImg from '/dDimg.webp'
 import CTAoutline from '../buttons/CTAoutline.astro';
 import CharHappy from '../character/CharHappy.astro';
+
+
+interface Props {
+  character_exists:boolean
+}
+
+const {character_exists = true} = Astro.props;
 ---
 <div class="p-5 lg:px-30">
   <div class="w-full flex flex-col items-center justify-start text-center gap-6 md:gap-8 pt-28 md:pt-24 pb-12">
@@ -17,13 +24,12 @@ import CharHappy from '../character/CharHappy.astro';
       >
         --:-- IST
       </div>
-       
-      <div class="h-[150px] w-[150px] flex flex-col lg:h-[180px] lg:w-[180px]">
 
-            <CharHappy />
-
-
+    {character_exists && (
+     <div class="h-[150px] w-[150px] flex flex-col lg:h-[180px] lg:w-[180px]">
+        <CharHappy />
       </div>
+    )}
 
       </div>
 
@@ -33,7 +39,7 @@ import CharHappy from '../character/CharHappy.astro';
     </div>
 
     <p class="font-secondary text-sm text-brand-secondary/90 md:text-sm animate-reveal-up md:text-[16px] lg:text-[20px]">
-      I'm a CSE Student currently pursuing B.Tech in CSE at Manipal University Jaipur. 
+      I'm a Software Developer and an audiovisual storyteller based in Kolkata.
     </p>
     
     <div class="flex flex-row gap-2 lg:gap-4">
