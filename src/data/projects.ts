@@ -10,9 +10,9 @@ export interface ProjectData {
 
 export const projectsList: ProjectData[] = [
   {
-    slug: "stagram-v1",
+    slug: "statgram-v1",
     title: "StatGram (v1)",
-    description: "An interactive data visualization platform built with HTML, CSS, and JavaScript, leveraging Chart.js to seamlessly generate and render custom charts.",
+    description: "An interactive data visualization platform built with HTML, CSS, and JavaScript and Chart.js",
     category: "WEBDEV",
     featured: true,
     thumbnail: "../images/statgram-thumb.png",
