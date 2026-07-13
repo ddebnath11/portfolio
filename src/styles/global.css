@@ -31,7 +31,7 @@
 /* Theme Definitions Map */
 :root {
   /* Default Baseline: DARK MODE */
-  --bg: #111111;  
+  --bg: #040404;  
   --secondary: #ffffff;
   --secondary-encoded: %23ffffff;
   --tertiary: #ffffff;
@@ -229,4 +229,5 @@ html.lenis, html.lenis body {
     transform: translate3d(0, 0, 0);
   }
 }
+
 
