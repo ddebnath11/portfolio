@@ -48,6 +48,12 @@
   --color-brand-primary: #239d3b;
 }
 
+:root[data-theme="astro"] {
+  --color-brand-primary: #a913e0;
+}
+
+
+
 
 @theme {
   --animate-fluid-float: bounce 2.5s cubic-bezier(0.45, 0, 0.55, 1) infinite;
