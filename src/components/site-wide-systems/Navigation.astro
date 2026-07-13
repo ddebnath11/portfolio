@@ -52,7 +52,15 @@ href="/"
 
  
 
-  <div class="relative z-50 flex flex-row gap-4">
+  <div class="relative z-50 flex flex-row gap-4 items-center">
+
+    <button class="w-5 h-5 border-4 border-brand-primary rounded-2xl cursor-pointer
+    bg-brand-primary/80
+    "
+    
+    id="theme-toggle-btn"
+    
+    ></button>
 
     <button 
       id="custom-hamburger"
@@ -201,4 +209,41 @@ href="/"
     }
     window.clearTimeout(inactivityTimeout);
   });
+</script>
+
+<script>
+  function initThemeSwitcher() {
+    const themes = ['dark', 'orange', 'github'];
+    
+    // 1. Instantly set the theme on load/swap from local storage
+    const savedTheme = localStorage.getItem('portfolio-theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+
+    // 2. Find your specific theme switch button element in the DOM
+    const themeButton = document.getElementById('theme-toggle-btn');
+
+    if (themeButton) {
+      themeButton.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        // 3. Grab current state and calculate the next theme index array pointer
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+        let currentIndex = themes.indexOf(currentTheme);
+        
+        // Handle cases where the current theme isn't found in the array index cleanly
+        if (currentIndex === -1) currentIndex = 0;
+
+        let nextIndex = (currentIndex + 1) % themes.length;
+        const nextTheme = themes[nextIndex];
+
+        // 4. Update the DOM data attribute configuration settings and save it local
+        document.documentElement.setAttribute('data-theme', nextTheme);
+        localStorage.setItem('portfolio-theme', nextTheme);
+      });
+    }
+  }
+
+  // Initialize theme controls cleanly across standard page setups and Astro transitions swaps
+  initThemeSwitcher();
+  document.addEventListener('astro:after-swap', initThemeSwitcher);
 </script>

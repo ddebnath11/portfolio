@@ -3,110 +3,114 @@ import ButtonFilled from '../buttons/ButtonFilled.astro';
 import ButtonOutline from '../buttons/ButtonOutline.astro';
 
 interface Props {
-  project_category:string;
-  project_name:string;
+  project_category: string;
+  project_name: string;
   project_description: string;
-  slug:string;
-  featured?:boolean
-  thumbnail?:string
-  launch?:string
-  github?:string
+  slug: string;
+  featured?: boolean;
+  thumbnail?: string;
+  launch?: string;
+  github?: string;
+  techstack?: string[]; 
 }
 
-const { project_category, project_name, project_description, slug, featured = false, thumbnail, launch, github} = Astro.props;
-
+const { project_category, project_name, project_description, slug, featured = false, thumbnail, launch, github, techstack } = Astro.props;
 ---
 {featured ? 
-   
-    <div class="border border-brand-secondary/10 bg-brand-bg/10 backdrop-blur-sm p-6 md:p-8 flex flex-col gap-6 items-start text-left rounded-xl"
-    >
+  
+  <div class="border border-brand-secondary/10 bg-brand-bg/10 backdrop-blur-sm p-6 md:p-8 flex flex-col gap-6 items-start text-left rounded-xl">
+    <div class="border border-brand-secondary/10 aspect-[16/9] w-full overflow-hidden">
+      <img src={thumbnail} class="w-full h-full object-cover" alt={project_name}>
+    </div>
 
-          <div class="border border-brand-secondary/10 aspect-[16/9] w-full">
+    <span class="text-[10px] font-mono tracking-[0.15em] text-brand-primary uppercase font-bold">
+      FEATURED
+    </span>
 
-            <img src= {thumbnail} class="w-full">
-
-
-
-          </div>
-
-
-          <span class="text-[10px] font-mono tracking-[0.15em] text-brand-secondary/40 uppercase">
-            <span class="text-brand-primary">FEATURED</span>
+    {techstack && techstack.length > 0 && (
+      <div class="flex flex-row flex-wrap gap-2">
+        {techstack.map((tech) => (
+          <span class="px-2 py-0.5 text-[10px] font-mono uppercase bg-brand-secondary/5 border border-brand-secondary/10 rounded-md text-brand-secondary/70 tracking-wider">
+            {tech}
           </span>
-          
-          <div class="flex flex-col gap-2">
-            <h2 class="text-xl lg:text-2xl font-accent font-bold tracking-tight text-brand-secondary group-hover:text-brand-primary transition-colors duration-300">
-              {project_name}
-            </h2>
-            <p class="text-sm text-brand-secondary/50 font-secondary font-light leading-relaxed md:text-[16px] lg:text-[18px]">
-              {project_description}
-            </p>
-            
-            
-          </div>
+        ))}
+      </div>
+    )}
+    
+    <div class="flex flex-col gap-2">
+      <h2 class="text-xl lg:text-2xl font-accent font-bold tracking-tight text-brand-secondary transition-colors duration-300">
+        {project_name}
+      </h2>
+      <p class="text-sm text-brand-secondary/60 font-secondary font-light leading-relaxed md:text-[16px] lg:text-[18px]">
+        {project_description}
+      </p>
+    </div>
 
-          <div class="flex flex-row gap-2 items-center">
-
-          <ButtonFilled buttonAction='Launch' url={launch} newTab/>
-
-
-          <a class="border border-brand-secondary/20 p-4 rounded-xl hover:bg-brand-secondary/1 hover:border-brand-primary transition-all duration-300"
-
+    <div class="flex flex-row gap-2 items-center">
+      <ButtonFilled buttonAction='Launch' url={launch} newTab/>
+      
+      {github && (
+        <a 
+          class="border border-brand-secondary/20 p-4 rounded-xl hover:bg-brand-secondary/5 hover:border-brand-primary transition-all duration-300 text-brand-secondary"
           href={github}
           target="_blank"
-          
-          
-          >
-            <svg class="w-5 h-5 md:w-6 md:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-              <path d="M9 18c-4.51 2-5-2-7-2" />
-            </svg>
-
-          </a>
-
-            </div>
-          
-          
-
-          
-
-
-          
-
-      
-</div>   
-
+          rel="noopener noreferrer"
+        >
+          <svg class="w-5 h-5 md:w-6 md:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+            <path d="M9 18c-4.51 2-5-2-7-2" />
+          </svg>
+        </a>
+      )}
+    </div>
+  </div> 
+  
 : 
 
-<div class="border border-brand-secondary/10 bg-brand-bg/10 backdrop-blur-sm p-6 md:p-8 flex flex-col gap-6 items-start text-left rounded-none transition-all duration-300"
+  <div class="border border-brand-secondary/10 bg-brand-bg/10 backdrop-blur-sm p-6 md:p-8 flex flex-col gap-6 items-start text-left rounded-xl transition-all duration-300">
+    <div class="border border-brand-secondary/10 aspect-[16/9] w-full overflow-hidden">
+      <img src={thumbnail} class="w-full h-full object-cover" alt={project_name}>
+    </div>
 
-
->
-
-          <div class="border border-brand-secondary/10 aspect-[16/9] w-full">
-
-             <img src= {thumbnail} class="w-full">
-
-
-
-          </div>
-
-
-          <span class="text-[10px] font-mono tracking-[0.15em] text-brand-secondary/40 uppercase">
-            {project_category}
+    <span class="text-[10px] font-mono tracking-[0.15em] text-brand-secondary/40 uppercase">
+      {project_category}
+    </span>
+    
+    {techstack && techstack.length > 0 && (
+      <div class="flex flex-row flex-wrap gap-2">
+        {techstack.map((tech) => (
+          <span class="px-2 py-0.5 text-[10px] font-mono uppercase bg-brand-secondary/5 border border-brand-secondary/10 rounded-md text-brand-secondary/70 tracking-wider">
+            {tech}
           </span>
-          
-          <div class="flex flex-col gap-2">
-            <h2 class="text-xl lg:text-2xl font-accent font-bold tracking-tight text-brand-secondary group-hover:text-brand-primary transition-colors duration-300">
-              {project_name}
-            </h2>
-            <p class="text-sm text-brand-secondary/50 font-secondary font-light leading-relaxed md:text-[16px] lg:text-[16px]">
-              {project_description}
-            </p>
-          </div>
-</div>
+        ))}
+      </div>
+    )}
 
-
-
-
+    <div class="flex flex-col gap-2">
+      <h2 class="text-xl lg:text-2xl font-accent font-bold tracking-tight text-brand-secondary transition-colors duration-300">
+        {project_name}
+      </h2>
+      <p class="text-sm text-brand-secondary/50 font-secondary font-light leading-relaxed md:text-[16px] lg:text-[16px]">
+        {project_description}
+      </p>
+    </div>
+    
+    {/* Action elements for regular projects */}
+    <div class="flex flex-row gap-2 items-center w-full pt-2">
+      <ButtonFilled buttonAction='Launch' url={launch} newTab/>
+      {github && (
+        <a 
+          class="border border-brand-secondary/20 p-4 rounded-xl hover:bg-brand-secondary/5 hover:border-brand-primary transition-all duration-300 text-brand-secondary"
+          href={github}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg class="w-5 h-5 md:w-6 md:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+            <path d="M9 18c-4.51 2-5-2-7-2" />
+          </svg>
+        </a>
+      )}
+    </div>
+  </div>
 }

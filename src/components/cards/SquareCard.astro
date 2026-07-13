@@ -30,7 +30,7 @@ const { pillarNum, pillarTitle, pillarDescription , logos = []} = Astro.props;
                             src={logoSrc} 
                             alt="Technology Logo" 
                             class="w-full h-full object-contain"
-                            loading="eager" 
+                            loading="lazy" 
                           />
                         </div>
                       ))}
@@ -43,7 +43,7 @@ const { pillarNum, pillarTitle, pillarDescription , logos = []} = Astro.props;
             <h2 class="text-xl lg:text-2xl font-accent font-bold tracking-tight text-brand-secondary group-hover:text-brand-primary transition-colors duration-300">
               {pillarTitle}
             </h2>
-            <p class="text-sm text-brand-secondary/50 font-secondary font-light leading-relaxed md:text-[16px] lg:text-[16px]">
+            <p class="text-sm text-brand-secondary/60 font-secondary font-light leading-relaxed md:text-[16px] lg:text-[16px]">
               {pillarDescription}
             </p>
           </div>
