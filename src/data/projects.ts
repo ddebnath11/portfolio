@@ -23,4 +23,16 @@ export const projectsList: ProjectData[] = [
     launch: "https://statgram.netlify.app/"
   },
 
+  {
+    slug: "umsoman-website-redesign",
+    title: "umsoman Redesign",
+    description: "A complete redesign of the official website of United Media Services, Oman.",
+    category: "WEBDEV",
+    techstack: ['AstroJS', 'TailwindCSS', 'Figma'],
+    featured: false,
+    thumbnail: "../images/umsoman-thumb.png",
+    github: "https://github.com/ddebnath11/cleanstats",
+    launch: "https://statgram.netlify.app/"
+  }
+
 ];
